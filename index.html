@@ -878,7 +878,7 @@
     border: 3px solid var(--gold);
     box-shadow: 0 8px 32px rgba(0,0,0,0.2);
   }
-  #generate-badge-btn {
+  #download-pdf-btn {
     background: var(--gold);
     color: var(--ink);
     font-family: 'Space Mono', monospace;
@@ -891,20 +891,8 @@
     transition: all 0.3s;
     font-weight: 700;
   }
-  #generate-badge-btn:hover { background: var(--rust); color: white; }
-  #download-badge-btn {
-    display: none;
-    background: transparent;
-    color: var(--teal);
-    border: 2px solid var(--teal);
-    font-family: 'Space Mono', monospace;
-    font-size: 12px;
-    padding: 12px 28px;
-    cursor: pointer;
-    margin-left: 16px;
-    transition: all 0.2s;
-  }
-  #download-badge-btn:hover { background: var(--teal); color: white; }
+  #download-pdf-btn:hover { background: var(--rust); color: white; }
+  #download-pdf-btn:disabled { opacity: 0.6; cursor: not-allowed; }
 
   /* BIBLIOGRAPHY */
   .biblio-section {
@@ -2098,9 +2086,8 @@
       <canvas id="badgeCanvas" width="500" height="420"></canvas>
     </div>
     <br>
-    <button id="generate-badge-btn" onclick="generateBadge()">✦ Générer mon badge</button>
-    <button id="download-badge-btn" onclick="downloadBadge()">⬇ Télécharger</button>
-    <p style="font-size:0.85rem; color:var(--muted); margin-top:16px; font-style:italic;">Le badge inclut un identifiant unique et la date de validation.</p>
+    <button id="download-pdf-btn" onclick="downloadPDF()">⬇ Télécharger mon certificat PDF</button>
+    <p style="font-size:0.85rem; color:var(--muted); margin-top:16px; font-style:italic;">Le PDF inclut le badge, vos productions écrites, un identifiant unique et la date de validation.</p>
 
     <!-- Productions écrites -->
     <div id="productions-display" style="margin-top:40px; text-align:left;">
@@ -2630,16 +2617,6 @@ function generateBadge() {
   ctx.font = '9px monospace';
   ctx.fillText('IRTS PARMENTIER · Module Historique Médico-Social', 250, 410);
 
-  document.getElementById('download-badge-btn').style.display = 'inline-block';
-  showNotification('Badge généré ! Téléchargez-le.');
-}
-
-function downloadBadge() {
-  const canvas = document.getElementById('badgeCanvas');
-  const link = document.createElement('a');
-  link.download = 'badge-histoire-handicap.png';
-  link.href = canvas.toDataURL();
-  link.click();
 }
 
 // ===== QCM VISIBILITY OBSERVER =====
@@ -2654,6 +2631,114 @@ document.querySelectorAll('.qcm-question').forEach(q => observer.observe(q));
 // ===== INIT =====
 document.getElementById('total-points').textContent = TOTAL_ACTIVITIES;
 updateProgress();
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+async function downloadPDF() {
+  const btn = document.getElementById('download-pdf-btn');
+  btn.disabled = true;
+  btn.textContent = '⏳ Génération en cours…';
+
+  // S'assurer que le canvas est rendu
+  generateBadge();
+  populateProductions();
+
+  // Attendre le chargement de jsPDF si nécessaire
+  if (!window.jspdf) {
+    await new Promise(r => setTimeout(r, 800));
+  }
+
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+  const margin = 15;
+  const pageW = 210;
+  const pageH = 297;
+  const contentW = pageW - margin * 2;
+
+  // ---- Page 1 : badge ----
+  const canvas = document.getElementById('badgeCanvas');
+  const imgData = canvas.toDataURL('image/png');
+  const badgeW = contentW;
+  const badgeH = Math.round(badgeW * canvas.height / canvas.width);
+  doc.addImage(imgData, 'PNG', margin, margin, badgeW, badgeH);
+
+  let y = margin + badgeH + 14;
+
+  // ---- Titre productions ----
+  const checkPage = (needed) => {
+    if (y + needed > pageH - margin) { doc.addPage(); y = margin + 10; }
+  };
+
+  checkPage(20);
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(14);
+  doc.setTextColor(26, 18, 8);
+  doc.text('Vos productions écrites', margin, y);
+  y += 4;
+  doc.setDrawColor(201, 149, 42);
+  doc.setLineWidth(0.6);
+  doc.line(margin, y, pageW - margin, y);
+  y += 8;
+
+  // ---- 4 productions ----
+  const productions = [
+    { label: 'Activité 6 · Guerres mondiales & regard social',          id: 'reflect1' },
+    { label: 'Activité 10 · Loi 1975 — positionnement analytique',      id: 'reflect-loi75' },
+    { label: 'Activité 16 · Acteurs médico-sociaux — mise en situation', id: 'reflect-ms1' },
+    { label: 'Activité 18 · Synthèse historique — évolution du regard',  id: 'reflect-synth' }
+  ];
+
+  productions.forEach(({ label, id }) => {
+    const el = document.getElementById(id);
+    const text = el && el.value.trim() ? el.value.trim() : '(aucun texte saisi)';
+    const words = el && el.value.trim()
+      ? el.value.trim().split(/\s+/).filter(w => w.length > 0).length : 0;
+
+    // Label en or
+    checkPage(18);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(10);
+    doc.setTextColor(180, 120, 20);
+    doc.text(label, margin, y);
+    y += 5;
+
+    // Nombre de mots
+    doc.setFont('helvetica', 'italic');
+    doc.setFontSize(8);
+    doc.setTextColor(120, 100, 70);
+    doc.text(words + ' mot' + (words > 1 ? 's' : ''), margin, y);
+    y += 5;
+
+    // Texte (avec retour à la ligne automatique)
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(10);
+    doc.setTextColor(26, 18, 8);
+    const lines = doc.splitTextToSize(text, contentW);
+    lines.forEach(line => {
+      checkPage(6);
+      doc.text(line, margin, y);
+      y += 5.5;
+    });
+
+    y += 6; // espace entre productions
+  });
+
+  // ---- Pied de page sur chaque page ----
+  const totalPages = doc.internal.getNumberOfPages();
+  for (let i = 1; i <= totalPages; i++) {
+    doc.setPage(i);
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(7);
+    doc.setTextColor(150, 130, 100);
+    doc.text('CAMPUS SOCIAL FORMATION · IRTS PARMENTIER · © 2025', pageW / 2, pageH - 8, { align: 'center' });
+    doc.text('Page ' + i + ' / ' + totalPages, pageW - margin, pageH - 8, { align: 'right' });
+  }
+
+  doc.save('certificat-histoire-handicap.pdf');
+  showNotification('PDF téléchargé avec succès !');
+  btn.disabled = false;
+  btn.textContent = '⬇ Télécharger mon certificat PDF';
+}
 </script>
 </body>
 </html>
