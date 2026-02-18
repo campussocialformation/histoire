@@ -1,0 +1,2552 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Histoire du Handicap dans le Médico-Social</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1208;
+    --parchment: #f5f0e8;
+    --aged: #e8dfc8;
+    --rust: #8b3a2a;
+    --gold: #c9952a;
+    --teal: #2a6b7c;
+    --sage: #4a6741;
+    --muted: #6b5c44;
+    --progress-fill: #2a6b7c;
+    --progress-bg: #d4c9b0;
+    --border: #c4b89a;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--parchment);
+    color: var(--ink);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.8;
+  }
+
+  /* PROGRESS BAR */
+  #progress-bar-container {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    background: var(--ink);
+    padding: 8px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  }
+  #progress-bar-container span {
+    color: var(--gold);
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+  #progress-track {
+    flex: 1;
+    height: 8px;
+    background: #333;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  #progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--teal), var(--gold));
+    border-radius: 4px;
+    transition: width 0.5s ease;
+  }
+  #progress-count {
+    color: var(--gold);
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    background: var(--ink);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 80px 40px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse at 20% 50%, rgba(42,107,124,0.15) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 30%, rgba(201,149,42,0.1) 0%, transparent 50%);
+  }
+  .hero-ornament {
+    font-family: 'Space Mono', monospace;
+    color: var(--gold);
+    opacity: 0.4;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 900;
+    color: var(--parchment);
+    line-height: 1.1;
+    max-width: 900px;
+    margin-bottom: 24px;
+    position: relative;
+  }
+  .hero h1 em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  .hero-sub {
+    font-family: 'Source Serif 4', serif;
+    font-size: 1.1rem;
+    color: #a89878;
+    max-width: 600px;
+    margin-bottom: 48px;
+    line-height: 1.7;
+    font-style: italic;
+  }
+  .hero-stats {
+    display: flex;
+    gap: 48px;
+    flex-wrap: wrap;
+    justify-content: center;
+    position: relative;
+  }
+  .hero-stat {
+    text-align: center;
+  }
+  .hero-stat .num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    color: var(--gold);
+    font-weight: 700;
+    display: block;
+  }
+  .hero-stat .lbl {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: #a89878;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .scroll-hint {
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #a89878;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    animation: bounce 2s infinite;
+  }
+  @keyframes bounce {
+    0%,100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(8px); }
+  }
+
+  /* SECTIONS */
+  .section {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 80px 40px;
+  }
+  .section + .section {
+    border-top: 1px solid var(--border);
+  }
+
+  .section-era {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+  .section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 900;
+    color: var(--ink);
+    line-height: 1.2;
+    margin-bottom: 32px;
+  }
+  .section h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    color: var(--rust);
+    margin-top: 40px;
+    margin-bottom: 16px;
+  }
+  .section p {
+    margin-bottom: 20px;
+    color: #2a200f;
+  }
+
+  /* QUOTE BLOCK */
+  .quote-block {
+    border-left: 4px solid var(--gold);
+    margin: 40px 0;
+    padding: 20px 32px;
+    background: var(--aged);
+    position: relative;
+  }
+  .quote-block::before {
+    content: '"';
+    font-family: 'Playfair Display', serif;
+    font-size: 6rem;
+    color: var(--gold);
+    opacity: 0.2;
+    position: absolute;
+    top: -20px;
+    left: 16px;
+    line-height: 1;
+  }
+  .quote-block p {
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--muted);
+    margin: 0 0 8px;
+  }
+  .quote-block cite {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: var(--rust);
+  }
+
+  /* FIGURE CARD */
+  .figures-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+    margin: 32px 0;
+  }
+  .figure-card {
+    background: var(--aged);
+    border: 1px solid var(--border);
+    padding: 24px;
+    position: relative;
+  }
+  .figure-card::before {
+    content: '';
+    position: absolute;
+    top: 8px; left: 8px; right: -8px; bottom: -8px;
+    border: 1px solid var(--border);
+    z-index: -1;
+  }
+  .figure-name {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--rust);
+    margin-bottom: 4px;
+  }
+  .figure-dates {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+  }
+  .figure-desc {
+    font-size: 0.9rem;
+    color: #3a2a18;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* TIMELINE */
+  .timeline {
+    position: relative;
+    padding-left: 40px;
+    margin: 40px 0;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 12px;
+    top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--gold), var(--teal));
+  }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 32px;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -34px;
+    top: 8px;
+    width: 12px;
+    height: 12px;
+    background: var(--gold);
+    border-radius: 50%;
+    border: 2px solid var(--parchment);
+  }
+  .timeline-year {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+  }
+  .timeline-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--rust);
+    margin-bottom: 6px;
+  }
+  .timeline-text {
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* HIGHLIGHT BOX */
+  .highlight-box {
+    background: linear-gradient(135deg, var(--teal) 0%, #1a4a58 100%);
+    color: var(--parchment);
+    padding: 32px;
+    margin: 40px 0;
+  }
+  .highlight-box h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+  .highlight-box p {
+    color: #c8dde3;
+    font-size: 0.95rem;
+    margin: 0;
+  }
+
+  /* LAW BOX */
+  .law-box {
+    border: 2px solid var(--rust);
+    padding: 24px 32px;
+    margin: 32px 0;
+    position: relative;
+  }
+  .law-badge {
+    position: absolute;
+    top: -14px;
+    left: 24px;
+    background: var(--rust);
+    color: white;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    padding: 4px 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .law-box h4 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    color: var(--rust);
+    margin-bottom: 12px;
+    font-size: 1.1rem;
+  }
+  .law-box ul {
+    padding-left: 20px;
+  }
+  .law-box li {
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+    color: var(--muted);
+  }
+
+  /* ORGANISM CARDS */
+  .orgs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin: 32px 0;
+  }
+  .org-card {
+    background: var(--aged);
+    border-top: 3px solid var(--teal);
+    padding: 20px;
+  }
+  .org-acronym {
+    font-family: 'Space Mono', monospace;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--teal);
+    margin-bottom: 4px;
+  }
+  .org-name {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-bottom: 8px;
+    font-style: italic;
+  }
+  .org-role {
+    font-size: 0.85rem;
+    color: #2a200f;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* INTERACTIVE ELEMENTS */
+  .interaction-zone {
+    background: var(--aged);
+    border: 2px dashed var(--border);
+    padding: 32px;
+    margin: 40px 0;
+    text-align: center;
+  }
+  .interaction-zone h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .interaction-zone p {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+  .interaction-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    background: var(--ink);
+    padding: 4px 10px;
+    display: inline-block;
+    margin-bottom: 16px;
+  }
+
+  /* BUTTONS */
+  .btn {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 12px 28px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-primary {
+    background: var(--ink);
+    color: var(--gold);
+  }
+  .btn-primary:hover { background: var(--rust); }
+  .btn-secondary {
+    background: transparent;
+    color: var(--ink);
+    border: 2px solid var(--ink);
+    margin: 4px;
+  }
+  .btn-secondary:hover, .btn-secondary.selected {
+    background: var(--ink);
+    color: var(--parchment);
+  }
+  .btn-secondary.correct { background: var(--sage); color: white; border-color: var(--sage); }
+  .btn-secondary.wrong { background: var(--rust); color: white; border-color: var(--rust); }
+
+  /* MATCH EXERCISE */
+  .match-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 20px 0;
+  }
+  .match-col { display: flex; flex-direction: column; gap: 8px; }
+  .match-item {
+    padding: 12px 16px;
+    border: 2px solid var(--border);
+    cursor: pointer;
+    font-size: 0.9rem;
+    text-align: left;
+    background: white;
+    transition: all 0.2s;
+  }
+  .match-item:hover { border-color: var(--teal); background: #e8f4f7; }
+  .match-item.selected { border-color: var(--gold); background: #fdf4e3; }
+  .match-item.matched { border-color: var(--sage); background: #e8f5e8; color: var(--sage); font-weight: 600; }
+  .match-item.error { border-color: var(--rust); background: #fde8e8; animation: shake 0.3s; }
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    25% { transform: translateX(-8px); }
+    75% { transform: translateX(8px); }
+  }
+
+  /* DROPDOWN EXERCISE */
+  .fill-blank {
+    font-size: 1rem;
+    line-height: 2.5;
+    margin: 20px 0;
+  }
+  .fill-blank select {
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.9rem;
+    border: none;
+    border-bottom: 2px solid var(--gold);
+    background: transparent;
+    padding: 2px 8px;
+    cursor: pointer;
+    color: var(--teal);
+    font-weight: 600;
+  }
+  .fill-blank select:focus { outline: none; border-bottom-color: var(--rust); }
+
+  /* ACCORDION */
+  .accordion-item {
+    border-bottom: 1px solid var(--border);
+  }
+  .accordion-header {
+    width: 100%;
+    text-align: left;
+    background: transparent;
+    border: none;
+    padding: 16px 0;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: var(--ink);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .accordion-header:hover { color: var(--rust); }
+  .accordion-icon {
+    font-family: 'Space Mono', monospace;
+    font-size: 1.2rem;
+    transition: transform 0.3s;
+    color: var(--gold);
+  }
+  .accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+  }
+  .accordion-content.open { max-height: 1000px; }
+  .accordion-content p {
+    padding: 0 0 16px;
+    font-size: 0.95rem;
+    color: var(--muted);
+  }
+
+  /* DRAG AND DROP */
+  .drag-zone {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 12px 0;
+    min-height: 50px;
+    padding: 8px;
+    border: 2px dashed var(--border);
+    border-radius: 4px;
+    background: white;
+  }
+  .drag-zone.over { border-color: var(--teal); background: #e8f4f7; }
+  .drag-chip {
+    background: var(--ink);
+    color: var(--parchment);
+    padding: 6px 14px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    cursor: grab;
+    border-radius: 2px;
+    user-select: none;
+    transition: opacity 0.2s;
+  }
+  .drag-chip:active { cursor: grabbing; opacity: 0.7; }
+  .drag-label { font-size: 0.85rem; color: var(--muted); margin-bottom: 4px; font-style: italic; }
+
+  /* SLIDER */
+  .slider-zone { margin: 20px 0; }
+  .slider-zone input[type=range] {
+    width: 100%;
+    accent-color: var(--teal);
+    height: 6px;
+  }
+  .slider-labels {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+  .slider-value {
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--teal);
+    font-weight: 700;
+    margin-top: 8px;
+  }
+
+  /* REVEAL CARD */
+  .reveal-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+    margin: 20px 0;
+  }
+  .reveal-card {
+    perspective: 600px;
+    height: 140px;
+    cursor: pointer;
+  }
+  .reveal-card-inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.5s;
+  }
+  .reveal-card.flipped .reveal-card-inner { transform: rotateY(180deg); }
+  .card-face {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    text-align: center;
+  }
+  .card-front {
+    background: var(--ink);
+    color: var(--gold);
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-style: italic;
+  }
+  .card-back {
+    background: var(--aged);
+    border: 2px solid var(--border);
+    transform: rotateY(180deg);
+    font-size: 0.85rem;
+    color: #2a200f;
+    line-height: 1.5;
+  }
+
+  /* SORTING */
+  .sort-list {
+    list-style: none;
+    margin: 16px 0;
+  }
+  .sort-item {
+    background: var(--aged);
+    border: 1px solid var(--border);
+    padding: 12px 16px;
+    margin-bottom: 8px;
+    cursor: grab;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.9rem;
+  }
+  .sort-item:active { cursor: grabbing; }
+  .sort-handle { color: var(--gold); font-size: 1.2rem; }
+  .sort-item.drag-over { border-top: 3px solid var(--teal); }
+
+  /* HOTSPOT */
+  .hotspot-diagram {
+    position: relative;
+    background: var(--aged);
+    border: 1px solid var(--border);
+    padding: 32px;
+    margin: 20px 0;
+    min-height: 200px;
+  }
+  .hotspot-diagram h5 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    text-align: center;
+    margin-bottom: 24px;
+    color: var(--muted);
+  }
+  .hotspot-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .hotspot-btn {
+    background: white;
+    border: 2px solid var(--border);
+    padding: 14px;
+    cursor: pointer;
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--ink);
+    transition: all 0.2s;
+    font-family: 'Source Serif 4', serif;
+  }
+  .hotspot-btn:hover { border-color: var(--teal); background: #e8f4f7; }
+  .hotspot-btn.clicked { border-color: var(--sage); background: #e8f5e8; color: var(--sage); font-weight: 600; }
+  .hotspot-result {
+    margin-top: 16px;
+    padding: 12px;
+    background: white;
+    border-left: 3px solid var(--gold);
+    font-size: 0.9rem;
+    color: var(--muted);
+    display: none;
+  }
+  .hotspot-result.show { display: block; }
+
+  /* WORD CLOUD CLICK */
+  .concept-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 20px 0;
+    justify-content: center;
+  }
+  .concept-word {
+    padding: 8px 16px;
+    border: 2px solid var(--border);
+    cursor: pointer;
+    background: white;
+    transition: all 0.2s;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+  }
+  .concept-word:hover { border-color: var(--teal); }
+  .concept-word.tagged { background: var(--teal); color: white; border-color: var(--teal); }
+  .concept-word.size-1 { font-size: 0.8rem; }
+  .concept-word.size-2 { font-size: 1rem; }
+  .concept-word.size-3 { font-size: 1.2rem; }
+  .concept-word.size-4 { font-size: 1.5rem; }
+
+  /* REFLECTION TEXTAREA */
+  .reflection-area {
+    margin: 20px 0;
+  }
+  .reflection-area textarea {
+    width: 100%;
+    min-height: 120px;
+    padding: 16px;
+    border: 2px solid var(--border);
+    background: white;
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.95rem;
+    color: var(--ink);
+    resize: vertical;
+    line-height: 1.7;
+  }
+  .reflection-area textarea:focus {
+    outline: none;
+    border-color: var(--teal);
+  }
+  .char-counter {
+    text-align: right;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  /* QCM */
+  #qcm-section {
+    background: var(--ink);
+    padding: 80px 40px;
+  }
+  .qcm-wrapper {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+  .qcm-era { color: var(--gold); font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 8px; }
+  #qcm-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    color: var(--parchment);
+    margin-bottom: 16px;
+  }
+  #qcm-section .intro { color: #a89878; font-style: italic; margin-bottom: 48px; font-size: 1rem; }
+  .qcm-question {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 28px;
+    margin-bottom: 24px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.4s;
+  }
+  .qcm-question.visible { opacity: 1; transform: translateY(0); }
+  .qcm-q-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+  .qcm-q-text {
+    font-family: 'Playfair Display', serif;
+    color: var(--parchment);
+    font-size: 1.05rem;
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+  .qcm-options {
+    display: grid;
+    gap: 8px;
+  }
+  .qcm-option {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: #c8c0b0;
+    padding: 12px 16px;
+    cursor: pointer;
+    text-align: left;
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+    width: 100%;
+  }
+  .qcm-option:hover:not(:disabled) { background: rgba(255,255,255,0.12); color: white; }
+  .qcm-option.correct-opt { background: rgba(74,103,65,0.4); border-color: var(--sage); color: #90d080; }
+  .qcm-option.wrong-opt { background: rgba(139,58,42,0.4); border-color: var(--rust); color: #ff8070; }
+  .qcm-feedback {
+    margin-top: 12px;
+    padding: 10px;
+    font-size: 0.85rem;
+    border-left: 3px solid;
+    display: none;
+  }
+  .qcm-feedback.correct { border-color: var(--sage); color: #90d080; background: rgba(74,103,65,0.15); }
+  .qcm-feedback.wrong { border-color: var(--rust); color: #ff8070; background: rgba(139,58,42,0.15); }
+  .qcm-feedback.show { display: block; }
+
+  .qcm-score-area {
+    text-align: center;
+    padding: 40px;
+    display: none;
+  }
+  .qcm-score-area.show { display: block; }
+  .score-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 5rem;
+    color: var(--gold);
+    font-weight: 700;
+  }
+  .score-label { color: #a89878; margin-bottom: 24px; }
+
+  /* BADGE */
+  #badge-section {
+    background: var(--aged);
+    padding: 80px 40px;
+    text-align: center;
+  }
+  .badge-locked {
+    opacity: 0.4;
+    pointer-events: none;
+  }
+  .badge-message {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 24px;
+    letter-spacing: 1px;
+  }
+  .badge-canvas-container {
+    display: inline-block;
+    margin-bottom: 32px;
+  }
+  #badgeCanvas {
+    border: 3px solid var(--gold);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  }
+  #generate-badge-btn {
+    background: var(--gold);
+    color: var(--ink);
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 16px 40px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: 700;
+  }
+  #generate-badge-btn:hover { background: var(--rust); color: white; }
+  #download-badge-btn {
+    display: none;
+    background: transparent;
+    color: var(--teal);
+    border: 2px solid var(--teal);
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    padding: 12px 28px;
+    cursor: pointer;
+    margin-left: 16px;
+    transition: all 0.2s;
+  }
+  #download-badge-btn:hover { background: var(--teal); color: white; }
+
+  /* BIBLIOGRAPHY */
+  .biblio-section {
+    background: var(--ink);
+    padding: 80px 40px;
+  }
+  .biblio-section h2 {
+    font-family: 'Playfair Display', serif;
+    color: var(--gold);
+    font-size: 2rem;
+    margin-bottom: 32px;
+  }
+  .biblio-item {
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    padding: 16px 0;
+    font-size: 0.9rem;
+    color: #a89878;
+    line-height: 1.6;
+  }
+  .biblio-item strong { color: var(--parchment); font-weight: 600; }
+
+  /* SEPARATORS */
+  .ornament-sep {
+    text-align: center;
+    color: var(--gold);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem;
+    margin: 48px 0;
+    opacity: 0.5;
+  }
+
+  /* FULL-WIDTH DIVIDER */
+  .era-divider {
+    background: var(--ink);
+    color: var(--parchment);
+    text-align: center;
+    padding: 48px 40px;
+  }
+  .era-divider h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
+    color: var(--gold);
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .era-divider p {
+    font-style: italic;
+    color: #a89878;
+  }
+
+  /* NOTIFICATION */
+  #notification {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    background: var(--ink);
+    color: var(--gold);
+    padding: 14px 24px;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    border-left: 4px solid var(--gold);
+    z-index: 999;
+    transform: translateX(200%);
+    transition: transform 0.4s ease;
+    max-width: 300px;
+  }
+  #notification.show { transform: translateX(0); }
+  #notification .notif-points { color: var(--parchment); font-size: 0.8rem; margin-top: 4px; }
+
+  /* CHECK ICON */
+  .check-indicator {
+    display: inline-block;
+    background: var(--sage);
+    color: white;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 2px;
+    font-family: 'Space Mono', monospace;
+    margin-left: 8px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .check-indicator.done { opacity: 1; }
+
+  /* RESPONSIVE */
+  @media (max-width: 640px) {
+    .section { padding: 60px 24px; }
+    .match-container { grid-template-columns: 1fr; }
+    .hero-stats { gap: 24px; }
+    .hotspot-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- PROGRESS BAR -->
+<div id="progress-bar-container">
+  <span>📜 PROGRESSION</span>
+  <div id="progress-track"><div id="progress-fill"></div></div>
+  <div id="progress-count">0 / <span id="total-points">20</span> activités</div>
+</div>
+
+<!-- NOTIFICATION -->
+<div id="notification">
+  <div id="notif-text">Activité complétée !</div>
+  <div class="notif-points">+1 point de progression</div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-ornament">Module de formation — Secteur médico-social</div>
+  <h1>Histoire du <em>Handicap</em><br>dans le Champ Médico-Social</h1>
+  <p class="hero-sub">De l'Antiquité à nos jours — Des origines de l'exclusion aux politiques contemporaines d'inclusion</p>
+  <div class="hero-stats">
+    <div class="hero-stat"><span class="num">≈ 60'</span><span class="lbl">Durée estimée</span></div>
+    <div class="hero-stat"><span class="num">20</span><span class="lbl">Activités</span></div>
+    <div class="hero-stat"><span class="num">1945</span><span class="lbl">Année charnière</span></div>
+    <div class="hero-stat"><span class="num">2005</span><span class="lbl">Loi fondatrice</span></div>
+  </div>
+  <div class="scroll-hint">↓ &nbsp; COMMENCER &nbsp; ↓</div>
+</section>
+
+<!-- ===== PARTIE 1 : ANTIQUITÉ & MOYEN-ÂGE ===== -->
+<div class="era-divider">
+  <h3>I — Des origines à la Révolution française</h3>
+  <p>Antiquité · Moyen Âge · Âge classique</p>
+</div>
+
+<section class="section">
+  <div class="section-era">Chapitre 1 · Antiquité</div>
+  <h2>Le handicap dans les sociétés antiques : entre exclusion et sacralisation</h2>
+
+  <p>Avant même que le mot « handicap » existe, les sociétés humaines ont toujours été confrontées à la différence corporelle et mentale. Loin d'être une réalité uniforme, le regard porté sur les personnes présentant des déficiences a considérablement varié selon les cultures, les époques et les représentations religieuses ou mythologiques.</p>
+
+  <p>Dans la <strong>Mésopotamie antique</strong>, une tablette cunéiforme datant de 2800 avant notre ère témoigne d'une perception codifiée du handicap. Les différences corporelles y sont décrites comme des « signes » envoyés par les dieux — tantôt présages favorables, tantôt manifestations de la colère divine. Cette ambivalence fondamentale traversera les siècles.</p>
+
+  <p>Dans la <strong>Grèce antique</strong>, la mythologie met en scène des figures emblématiques. Héphaïstos, dieu forgeron boiteux, incarne cette dualité du corps différent : rejeté par sa mère Héra qui le jette de l'Olympe, il devient pourtant l'artisan des dieux. Œdipe, aux pieds percés dès sa naissance, réalise une tragédie dans laquelle le corps diforme est intimement lié au destin et à l'ordre de la cité. Pour le philosophe René Girard, Œdipe joue le rôle d'un bouc émissaire sacrifié pour que la cité retrouve son équilibre.</p>
+
+  <p>Platon et Aristote, dans leurs textes politiques, envisagent sans ambiguïté l'élimination des enfants nés avec des malformations. À Sparte, les nouveau-nés jugés inaptes étaient exposés au pied du mont Tégétus. Cette logique eugéniste, fondée sur l'utilité du corps pour la cité-État, sera l'une des premières formes institutionnalisées de discrimination envers les personnes handicapées.</p>
+
+  <p>Chez les <strong>Romains</strong>, une loi autorisait l'élimination des nourrissons « monstrueux » dans les huit premiers jours de vie. Passé ce délai, l'État prenait en charge l'enfant. Cette limite temporelle révèle une tension entre le droit privé du père (pater familias) et l'intervention publique — tension qui annonce les débats modernes sur la place de l'État dans la protection des personnes vulnérables.</p>
+
+  <div class="quote-block">
+    <p>Le handicapé est à la fois celui qui communique avec les dieux et le monstre représentant des enfers. Cette image ambivalente traverse toutes les cultures antiques.</p>
+    <cite>— Synthèse de la littérature sur l'histoire du handicap dans l'Antiquité</cite>
+  </div>
+
+  <!-- ACTIVITÉ 1 : QCM rapide -->
+  <div class="interaction-zone">
+    <div class="interaction-label">Activité 1 · Vérification de lecture</div>
+    <h4>Question de compréhension</h4>
+    <p>Quel philosophe grec recommandait l'élimination des enfants nés avec des malformations ?</p>
+    <div id="act1-options" style="display:flex; flex-wrap:wrap; gap:8px; justify-content:center;">
+      <button class="btn btn-secondary" onclick="checkA1(this,'wrong')">Socrate</button>
+      <button class="btn btn-secondary" onclick="checkA1(this,'correct')">Platon et Aristote</button>
+      <button class="btn btn-secondary" onclick="checkA1(this,'wrong')">Hérodote</button>
+      <button class="btn btn-secondary" onclick="checkA1(this,'wrong')">Hippocrate</button>
+    </div>
+    <div id="act1-feedback" style="display:none; margin-top:16px; color:var(--sage); font-style:italic; font-size:0.9rem;"></div>
+    <span class="check-indicator" id="check1">✓ COMPLÉTÉ</span>
+  </div>
+
+  <h3>Le christianisme et la charité médiévale</h3>
+
+  <p>L'avènement du christianisme introduit un changement de paradigme fondamental. Là où l'Antiquité voyait dans le corps différent un signe de disgrâce divine, le Nouveau Testament présente Jésus guérissant les aveugles, les paralytiques, les lépreux. L'invalidité cesse d'être une souillure du corps pour devenir une occasion d'exercer la charité — principe théologique central.</p>
+
+  <p>Dès le haut Moyen Âge, la charité est l'apanage des monastères et des ordres religieux. Les moines bénédictins, en particulier, développent des hospices accueillant les malades et les indigents sans distinction. À partir du XIIe siècle, les premières confréries de pénitents, fondées sous l'autorité des évêques, organisent l'aide aux plus pauvres. Les paroissiens pieux bourgeois prennent en charge l'enterrement des indigents et l'aumône aux infirmes.</p>
+
+  <p>Mais ce regard charitable ne doit pas être idéalisé. Au Moyen Âge, le handicap reste assimilé à la catégorie des indigents et des « déviants ». La pauvreté, la marginalité, la délinquance et le handicap forment un continuum dans la pensée sociale. Les mendiants invalides côtoient les vagabonds dans les représentations collectives et les pratiques institutionnelles.</p>
+
+  <!-- ACTIVITÉ 2 : Classement chronologique -->
+  <div class="interaction-zone">
+    <div class="interaction-label">Activité 2 · Chronologie à ordonner</div>
+    <h4>Remettez ces éléments dans l'ordre chronologique (glissez-déposez)</h4>
+    <p>Du plus ancien au plus récent</p>
+    <ul class="sort-list" id="sort1" ondragover="dragOver(event)">
+      <li class="sort-item" draggable="true" data-order="3" ondragstart="dragStart(event)" ondrop="drop(event, 'sort1')" ondragover="dragItemOver(event)">
+        <span class="sort-handle">⠿</span> Confréries de pénitents organisent la charité en Europe
+      </li>
+      <li class="sort-item" draggable="true" data-order="1" ondragstart="dragStart(event)" ondrop="drop(event, 'sort1')" ondragover="dragItemOver(event)">
+        <span class="sort-handle">⠿</span> Tablette cunéiforme mésopotamienne sur le handicap
+      </li>
+      <li class="sort-item" draggable="true" data-order="4" ondragstart="dragStart(event)" ondrop="drop(event, 'sort1')" ondragover="dragItemOver(event)">
+        <span class="sort-handle">⠿</span> Louis XIV crée un système d'hôpitaux publics
+      </li>
+      <li class="sort-item" draggable="true" data-order="2" ondragstart="dragStart(event)" ondrop="drop(event, 'sort1')" ondragover="dragItemOver(event)">
+        <span class="sort-handle">⠿</span> Jésus guérit les malades — changement de paradigme chrétien
+      </li>
+    </ul>
+    <button class="btn btn-primary" onclick="checkSort('sort1', 'check2', 'sort1-feedback')">Vérifier l'ordre</button>
+    <div id="sort1-feedback" style="margin-top:12px; font-size:0.9rem; display:none;"></div>
+    <span class="check-indicator" id="check2">✓ COMPLÉTÉ</span>
+  </div>
+
+  <h3>L'âge classique : le grand renfermement</h3>
+
+  <p>Le XVIIe siècle marque une rupture majeure avec ce qu'on appelle le « grand renfermement ». Michel Foucault, dans son œuvre monumentale <em>Histoire de la folie à l'âge classique</em> (1961), a analysé comment les sociétés européennes ont progressivement enfermé leurs membres jugés improductifs ou dérangeants.</p>
+
+  <p>En 1656, Louis XIV signe l'édit de fondation de l'Hôpital Général de Paris. Cette institution, loin d'être un établissement médical, est avant tout un instrument de contrôle social. On y enferme pêle-mêle les pauvres, les fous, les libertins, les filles de mauvaise vie et les handicapés. L'objectif n'est pas de soigner mais de mettre à l'écart ce qui trouble l'ordre public.</p>
+
+  <p>Cette logique d'exclusion s'articule avec la montée en puissance du mercantilisme et d'une conception utilitariste du corps. Dans une société où la valeur d'un individu se mesure à sa capacité de travail, le corps improductif devient une charge sociale à gérer, non une personne à accompagner.</p>
+
+</section>
+
+<!-- ===== PARTIE 2 : RÉVOLUTION & XIXe SIÈCLE ===== -->
+<div class="era-divider">
+  <h3>II — La Révolution française et le XIXe siècle</h3>
+  <p>Naissance des aliénistes · Premiers établissements spécialisés · Loi de 1838</p>
+</div>
+
+<section class="section">
+  <div class="section-era">Chapitre 2 · XIXe siècle</div>
+  <h2>La naissance des institutions spécialisées : entre progrès et enfermement</h2>
+
+  <p>La Révolution française (1789) apporte un tournant idéologique décisif. Les principes des droits de l'Homme, d'égalité et de citoyenneté créent un cadre nouveau pour penser la place des personnes handicapées dans la société. Les fous sortent progressivement des prisons pour entrer dans des asiles d'aliénés — une différenciation qui marque le début d'une médicalisation du handicap mental.</p>
+
+  <h3>Philippe Pinel et la naissance de la psychiatrie</h3>
+
+  <p><strong>Philippe Pinel</strong> (1745-1826) est une figure fondatrice. Nommé médecin à l'asile de Bicêtre en 1793, puis à la Salpêtrière en 1795, il fait retirer leurs chaînes aux aliénés, convaincu que la folie est une maladie curable et non un état définitif. Avec Jean-Baptiste Pussin, surveillant d'asile qui partage ses vues, il entreprend la première classification systématique des maladies mentales selon leurs signes cliniques.</p>
+
+  <p>Cette démarche est fondatrice : elle distingue la psychiatrie de la simple surveillance et introduit l'idée d'un traitement moral. Pinel considère que l'environnement thérapeutique lui-même peut guérir — principe qui anticipe les futures thérapies institutionnelles et la psychothérapie institutionnelle du XXe siècle.</p>
+
+  <!-- ACTIVITÉ 3 : Carte à retourner -->
+  <div class="interaction-zone">
+    <div class="interaction-label">Activité 3 · Fiches à retourner</div>
+    <h4>Cliquez sur chaque carte pour découvrir le rôle de ces pionniers</h4>
+    <p>Cliquez sur chaque carte pour la retourner <span class="check-indicator" id="check3">✓ COMPLÉTÉ</span></p>
+    <div class="reveal-cards" id="reveal-cards-1">
+      <div class="reveal-card" onclick="flipCard(this, 'reveal-cards-1', 3)">
+        <div class="reveal-card-inner">
+          <div class="card-face card-front">Philippe Pinel</div>
+          <div class="card-face card-back">Médecin (1745-1826). A retiré les chaînes aux aliénés à Bicêtre et la Salpêtrière. Fondateur de la classification psychiatrique moderne.</div>
+        </div>
+      </div>
+      <div class="reveal-card" onclick="flipCard(this, 'reveal-cards-1', 3)">
+        <div class="reveal-card-inner">
+          <div class="card-face card-front">Jean-Baptiste Pussin</div>
+          <div class="card-face card-back">Surveillant d'asile. Précurseur du traitement moral, ses pratiques bienveillantes ont influencé Pinel et inspiré les premières réformes asilaires.</div>
+        </div>
+      </div>
+      <div class="reveal-card" onclick="flipCard(this, 'reveal-cards-1', 3)">
+        <div class="reveal-card-inner">
+          <div class="card-face card-front">Jean-Étienne Esquirol</div>
+          <div class="card-face card-back">Successeur de Pinel (1772-1840). A élaboré la loi de 1838 sur les aliénés, première loi psychiatrique française, restée en vigueur jusqu'en 1990.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3>La loi de 1838 : première législation psychiatrique</h3>
+
+  <div class="law-box">
+    <div class="law-badge">Texte fondateur</div>
+    <h4>Loi du 30 juin 1838 sur les aliénés</h4>
+    <ul>
+      <li>Obligation pour chaque département d'établir un asile d'aliénés ou de passer une convention avec un établissement voisin</li>
+      <li>Création de deux régimes d'internement : le placement volontaire (à la demande de la famille) et le placement d'office (décidé par le préfet)</li>
+      <li>Première intervention législative de l'État dans la prise en charge de la maladie mentale</li>
+      <li>Restera en vigueur <em>plus de 150 ans</em>, jusqu'à la loi du 27 juin 1990</li>
+    </ul>
+  </div>
+
+  <h3>Les précurseurs de l'éducation spécialisée</h3>
+
+  <p>Parallèlement à l'essor asilaire, le XIXe siècle voit naître les premières expériences d'éducation spécialisée. Ces initiatives, souvent portées par des médecins-éducateurs, remettent en cause le fatalisme qui dominait la prise en charge des personnes présentant des déficiences intellectuelles.</p>
+
+  <div class="figures-grid">
+    <div class="figure-card">
+      <div class="figure-name">Valentin Haüy</div>
+      <div class="figure-dates">1745 – 1822</div>
+      <p class="figure-desc">Fondateur en 1784 de la première école pour aveugles à Paris, l'Institution nationale des jeunes aveugles. A inventé l'écriture en relief précédant le braille. Son travail démontrait que les personnes aveugles pouvaient apprendre et travailler.</p>
+    </div>
+    <div class="figure-card">
+      <div class="figure-name">Louis Braille</div>
+      <div class="figure-dates">1809 – 1852</div>
+      <p class="figure-desc">Ancien élève de Haüy, lui-même aveugle, il invente à 15 ans le système d'écriture en points qui porte son nom. Le code braille sera adopté officiellement en France en 1854, après la mort de son inventeur.</p>
+    </div>
+    <div class="figure-card">
+      <div class="figure-name">Abbé de l'Épée</div>
+      <div class="figure-dates">1712 – 1789</div>
+      <p class="figure-desc">Fondateur à Paris de la première école publique pour sourds-muets (1760). Il développe une méthode d'enseignement par signes qui deviendra la base de la langue des signes française (LSF), ancêtre de l'ASL américaine.</p>
+    </div>
+    <div class="figure-card">
+      <div class="figure-name">Édouard Séguin</div>
+      <div class="figure-dates">1812 – 1880</div>
+      <p class="figure-desc">Élève d'Itard, il développe la « méthode physiologique » pour l'éducation des enfants « idiots ». Émigré aux États-Unis, il fonde en 1866 l'Association américaine pour la déficience intellectuelle. Ses travaux influenceront Maria Montessori.</p>
+    </div>
+    <div class="figure-card">
+      <div class="figure-name">Jean Itard</div>
+      <div class="figure-dates">1774 – 1838</div>
+      <p class="figure-desc">Médecin de l'Institution nationale de Sourds-Muets. Connu pour sa tentative d'éducation de Victor de l'Aveyron (l'« enfant sauvage »). Ses méthodes d'observation et d'éducation sensorielle fondent les bases de la pédagogie spécialisée.</p>
+    </div>
+    <div class="figure-card">
+      <div class="figure-name">Maria Montessori</div>
+      <div class="figure-dates">1870 – 1952</div>
+      <p class="figure-desc">Médecin italienne qui adapte les méthodes de Séguin et Itard pour créer une pédagogie révolutionnaire. Sa « Casa dei Bambini » (1907) part de l'éducation spécialisée pour proposer une réforme globale de l'éducation.</p>
+    </div>
+  </div>
+
+  <!-- ACTIVITÉ 4 : Association -->
+  <div class="interaction-zone">
+    <div class="interaction-label">Activité 4 · Associations personnages / contributions</div>
+    <h4>Associez chaque pionnier à sa contribution principale</h4>
+    <p>Cliquez d'abord sur un nom, puis sur la contribution correspondante</p>
+    <div class="match-container" id="match1">
+      <div class="match-col" id="match1-left">
+        <button class="match-item" onclick="selectMatch(this, 'left', 'match1')">Valentin Haüy</button>
+        <button class="match-item" onclick="selectMatch(this, 'left', 'match1')">Louis Braille</button>
+        <button class="match-item" onclick="selectMatch(this, 'left', 'match1')">Abbé de l'Épée</button>
+        <button class="match-item" onclick="selectMatch(this, 'left', 'match1')">Édouard Séguin</button>
+      </div>
+      <div class="match-col" id="match1-right">
+        <button class="match-item" onclick="selectMatch(this, 'right', 'match1')" data-match="Abbé de l'Épée">1ère école pour sourds-muets et LSF</button>
+        <button class="match-item" onclick="selectMatch(this, 'right', 'match1')" data-match="Valentin Haüy">1ère école pour aveugles à Paris</button>
+        <button class="match-item" onclick="selectMatch(this, 'right', 'match1')" data-match="Édouard Séguin">Méthode physiologique pour enfants déficients</button>
+        <button class="match-item" onclick="selectMatch(this, 'right', 'match1')" data-match="Louis Braille">Système d'écriture en points pour aveugles</button>
+      </div>
+    </div>
+    <div id="match1-feedback" style="font-size:0.9rem; margin-top:8px; color:var(--sage);"></div>
+    <span class="check-indicator" id="check4">✓ COMPLÉTÉ</span>
+  </div>
+
+  <!-- ACTIVITÉ 5 : Texte à trous -->
+  <div class="interaction-zone">
+    <div class="interaction-label">Activité 5 · Texte à compléter</div>
+    <h4>Complétez les blancs avec les bonnes réponses</h4>
+    <div class="fill-blank" id="fillblank1">
+      La loi de 
+      <select onchange="checkFill(this, '1838', 'fb1-1')">
+        <option value="">__année__</option>
+        <option value="1789">1789</option>
+        <option value="1838">1838</option>
+        <option value="1905">1905</option>
+        <option value="1945">1945</option>
+      </select>
+      <span id="fb1-1" style="font-size:0.8rem;"></span>
+      sur les aliénés impose à chaque 
+      <select onchange="checkFill(this, 'département', 'fb1-2')">
+        <option value="">__entité__</option>
+        <option value="commune">commune</option>
+        <option value="région">région</option>
+        <option value="département">département</option>
+        <option value="État">État</option>
+      </select>
+      <span id="fb1-2" style="font-size:0.8rem;"></span>
+      de créer un asile. Elle restera en vigueur jusqu'en
+      <select onchange="checkFill(this, '1990', 'fb1-3')">
+        <option value="">__année__</option>
+        <option value="1960">1960</option>
+        <option value="1975">1975</option>
+        <option value="1990">1990</option>
+        <option value="2005">2005</option>
+      </select>
+      <span id="fb1-3" style="font-size:0.8rem;"></span>, soit plus d'un siècle et demi.
+    </div>
+    <span class="check-indicator" id="check5">✓ COMPLÉTÉ</span>
+  </div>
+
+</section>
+
+<!-- ===== PARTIE 3 : DEBUT DU XXe ===== -->
+<div class="era-divider">
+  <h3>III — Le tournant du XXe siècle</h3>
+  <p>Guerres mondiales · Naissance de la Sécurité sociale · Premières associations</p>
+</div>
+
+<section class="section">
+  <div class="section-era">Chapitre 3 · 1900–1945</div>
+  <h2>Les guerres et la naissance d'un droit à la réparation</h2>
+
+  <p>Le début du XXe siècle voit se développer en Europe les premières mesures législatives en faveur des travailleurs accidentés. En France, la loi du 9 avril 1898 sur les accidents du travail introduit le principe de réparation automatique du préjudice corporel lié au travail, sans avoir à prouver la faute de l'employeur. Cette logique assurantielle est une révolution conceptuelle : pour la première fois, la société reconnaît une responsabilité collective face aux conséquences de certains accidents.</p>
+
+  <p>Les deux guerres mondiales constituent un moment décisif pour la prise en charge du handicap. La masse des soldats revenus blessés, mutilés ou souffrant de chocs post-traumatiques (alors appelés « obus » ou « neurasthéniques ») crée une situation inédite. Des centaines de milliers d'hommes jeunes, souvent issus des classes populaires, se retrouvent dans l'incapacité totale ou partielle de travailler. La société ne peut plus ignorer cette réalité.</p>
+
+  <h3>Les « gueules cassées » et la naissance de la chirurgie réparatrice</h3>
+
+  <p>La Première Guerre mondiale (1914-1918) provoque des blessures d'une brutalité sans précédent. Les « gueules cassées » — soldats défigurés par les obus, les éclats d'obus et les gaz — deviennent le symbole visible d'un handicap acquis au service de la nation. En France, le chirurgien <strong>Hippolyte Morestin</strong> est l'un des pionniers de la chirurgie maxillo-faciale reconstructrice.</p>
+
+  <p>Ces soldats organisent rapidement des associations d'entraide. En 1921 est fondée l'Union des blessés de la face et de la tête — familièrement appelée « Les gueules cassées » — qui deviendra un acteur majeur du financement de la Loterie nationale et de la solidarité en faveur des personnes handicapées.</p>
+
+  <!-- ACTIVITÉ 6 : Texte réflexif -->
+  <div class="interaction-zone">
+    <div class="interaction-label">Activité 6 · Réflexion personnelle</div>
+    <h4>En quoi les guerres mondiales ont-elles transformé le regard social sur le handicap ?</h4>
+    <p>Rédigez une réponse d'au moins 80 mots. <span class="check-indicator" id="check6">✓ COMPLÉTÉ</span></p>
+    <div class="reflection-area">
+      <textarea id="reflect1" placeholder="Réfléchissez à la notion de 'dette nationale', au regard social sur les blessés de guerre, aux différences avec le regard sur les personnes handicapées 'de naissance'..." oninput="checkReflection('reflect1', 80, 'check6', 'rc1')"></textarea>
+      <div class="char-counter"><span id="rc1">0</span> mots — minimum requis : 80</div>
+    </div>
+  </div>
+
+  <h3>La naissance de la Sécurité sociale (1945)</h3>
+
+  <p>La Libération marque un tournant radical dans la philosophie de l'État-providence français. Sous l'impulsion de <strong>Pierre Laroque</strong> et <strong>Ambroise Croizat</strong>, l'ordonnance du 4 octobre 1945 crée la Sécurité sociale. Cette réforme s'inscrit dans la dynamique du Conseil National de la Résistance et du programme du CNR qui promettait « un plan complet de sécurité sociale, visant à assurer à tous les citoyens des moyens d'existence ».</p>
+
+  <p>Pour les personnes handicapées, la Sécurité sociale introduit une couverture des soins médicaux et, progressivement, la prise en charge des établissements médico-sociaux. Le financement de l'Assurance Maladie devient le socle sur lequel se construira l'ensemble du secteur médico-social spécialisé.</p>
+
+  <div class="highlight-box">
+    <h4>Le Plan Laroque (1962)</h4>
+    <p>Pierre Laroque, architecte de la Sécurité sociale, dirige également en 1962 une commission sur la politique de la vieillesse. Son rapport fonde les principes du maintien à domicile et de l'accompagnement global des personnes âgées — des principes qui influenceront la politique du handicap plusieurs décennies plus tard.</p>
+  </div>
+
+  <!-- ACTIVITÉ 7 : Accordéon -->
+  <div class="interaction-zone">
+    <div class="interaction-label">Activité 7 · Explorer les acteurs clés</div>
+    <h4>Cliquez sur chaque personnage pour en découvrir le rôle <span class="check-indicator" id="check7">✓ COMPLÉTÉ</span></h4>
+    <div id="accordion1">
+      <div class="accordion-item">
+        <button class="accordion-header" onclick="toggleAccordion(this, 'accordion1', 7)">
+          Pierre Laroque (1907-1997)
+          <span class="accordion-icon">+</span>
+        </button>
+        <div class="accordion-content">
+          <p>Haut fonctionnaire, Pierre Laroque est le principal architecte de la Sécurité sociale française. Après avoir travaillé pour le gouvernement de Vichy puis s'être rallié à la France libre, il dirige en 1945 la direction générale de la Sécurité sociale. Son plan repose sur trois principes : universalité (tous les travailleurs couverts), unité (un seul régime) et solidarité (contributions selon les moyens, prestations selon les besoins).</p>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <button class="accordion-header" onclick="toggleAccordion(this, 'accordion1', 7)">
+          Ambroise Croizat (1901-1951)
+          <span class="accordion-icon">+</span>
+        </button>
+        <div class="accordion-content">
+          <p>Ministre du Travail et de la Sécurité sociale de 1945 à 1947, militant syndical CGT, Ambroise Croizat est l'autre père fondateur de la Sécurité sociale. Il incarne la dimension ouvrière de cette réforme. À sa mort en 1951, le cortège funèbre rassemble plus d'un million de personnes — témoignage de l'attachement populaire à cette conquête sociale.</p>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <button class="accordion-header" onclick="toggleAccordion(this, 'accordion1', 7)">
+          Le Conseil National de la Résistance (CNR)
+          <span class="accordion-icon">+</span>
+        </button>
+        <div class="accordion-content">
+          <p>Fondé en 1943 sous la présidence de Jean Moulin, le CNR réunit toutes les forces de la Résistance intérieure. Son programme, adopté en mars 1944, prévoit la création d'un système de Sécurité sociale couvrant tous les risques (maladie, maternité, invalidité, vieillesse, accidents du travail). Ce programme est le terreau idéologique de l'État-providence français d'après-guerre.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ===== PARTIE 4 : 1945-1975 ===== -->
+<div class="era-divider">
+  <h3>IV — Les Trente Glorieuses et le médico-social</h3>
+  <p>1945–1975 · Naissance des associations · Premières lois · Catégorisation des handicaps</p>
+</div>
+
+<section class="section">
+  <div class="section-era">Chapitre 4 · 1945–1975</div>
+  <h2>L'essor du secteur associatif et la naissance des établissements spécialisés</h2>
+
+  <p>L'après-guerre voit une véritable explosion du mouvement associatif dans le champ du handicap. Des parents d'enfants handicapés, refusant le fatalisme et l'institutionnalisation définitive, créent des associations qui vont progressivement construire un véritable secteur médico-social.</p>
+
+  <p>Ce mouvement s'inscrit dans un contexte de croissance économique et de foi dans le progrès. Les Trente Glorieuses (1945-1975) permettent à la société française d'investir massivement dans l'éducation spécialisée, les établissements médico-sociaux et la protection sociale. C'est le temps des grandes fondations du secteur.</p>
+
+  <h3>La naissance des grandes associations</h3>
+
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-year">1929</div>
+      <div class="timeline-title">Ligue pour l'adaptation du diminué physique au travail (LADAPT)</div>
+      <p class="timeline-text">Fondée par Suzanne Fouché, LADAPT est l'une des premières associations françaises dédiées à la réadaptation professionnelle des personnes handicapées physiques. Elle jouera un rôle central dans la création des Centres de rééducation professionnelle (CRP).</p>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">1945</div>
+      <div class="timeline-title">Association des Paralysés de France (APF)</div>
+      <p class="timeline-text">Fondée par des personnes atteintes de poliomyélite, l'APF développe rapidement un réseau national d'établissements et de services. Elle incarne la philosophie du « par et pour les personnes handicapées » et deviendra l'une des associations les plus puissantes du secteur.</p>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">1947</div>
+      <div class="timeline-title">Union nationale des associations de parents de personnes handicapées mentales (UNAPEI)</div>
+      <p class="timeline-text">Née du mouvement des parents d'enfants trisomiques et déficients intellectuels, l'UNAPEI (alors SNAPEI) fédère des associations locales qui créent des IME, des ESAT, des foyers d'hébergement. Elle représente aujourd'hui plus de 60 000 personnes accompagnées.</p>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">1948</div>
+      <div class="timeline-title">Fédération nationale des accidentés du travail (FNATH)</div>
+      <p class="timeline-text">Issue du mouvement ouvrier, la FNATH représente les accidentés du travail et les malades professionnels. Elle contribuera à la reconnaissance du handicap acquis dans un contexte professionnel et à la défense des droits des victimes.</p>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">1956</div>
+      <div class="timeline-title">Union nationale des aveugles et déficients visuels (UNADEV)</div>
+      <p class="timeline-text">Regroupe les associations régionales d'accompagnement des personnes déficientes visuelles. Œuvre pour l'accessibilité, la formation et l'insertion professionnelle des personnes aveugles et malvoyantes.</p>
+    </div>
+  </div>
+
+  <!-- ACTIVITÉ 8 : Nuage de mots -->
+  <div class="interaction-zone">
+    <div class="interaction-label">Activité 8 · Concepts clés</div>
+    <h4>Cliquez sur tous les concepts qui caractérisent le mouvement associatif d'après-guerre</h4>
+    <p>Sélectionnez les termes pertinents (au moins 5) <span class="check-indicator" id="check8">✓ COMPLÉTÉ</span></p>
+    <div class="concept-cloud" id="cloud1">
+      <span class="concept-word size-4" onclick="tagConcept(this, 'cloud1', 5, 'check8')">Solidarité</span>
+      <span class="concept-word size-2" onclick="tagConcept(this, 'cloud1', 5, 'check8')">Eugénisme</span>
+      <span class="concept-word size-3" onclick="tagConcept(this, 'cloud1', 5, 'check8')">Parentalité</span>
+      <span class="concept-word size-4" onclick="tagConcept(this, 'cloud1', 5, 'check8')">Réadaptation</span>
+      <span class="concept-word size-2" onclick="tagConcept(this, 'cloud1', 5, 'check8')">Enfermement</span>
+      <span class="concept-word size-3" onclick="tagConcept(this, 'cloud1', 5, 'check8')">Insertion professionnelle</span>
+      <span class="concept-word size-4" onclick="tagConcept(this, 'cloud1', 5, 'check8')">Éducation spécialisée</span>
+      <span class="concept-word size-3" onclick="tagConcept(this, 'cloud1', 5, 'check8')">Militantisme</span>
+      <span class="concept-word size-2" onclick="tagConcept(this, 'cloud1', 5, 'check8')">Charité religieuse</span>
+      <span class="concept-word size-3" onclick="tagConcept(this, 'cloud1', 5, 'check8')">Droits</span>
+      <span class="concept-word size-4" onclick="tagConcept(this, 'cloud1', 5, 'check8')">Autonomie</span>
+    </div>
+  </div>
+
+  <h3>La loi de 1957 et les premières politiques d'emploi</h3>
+
+  <p>La loi du 23 novembre 1957 sur le reclassement professionnel des travailleurs handicapés est la première grande loi française consacrée spécifiquement aux personnes handicapées en dehors du champ médical. Elle crée les premières obligations d'emploi pour les entreprises et pose les bases des Centres de Rééducation Professionnelle (CRP).</p>
+
+  <p>Cette loi introduit également la notion de « travailleur handicapé reconnu » — une catégorisation administrative qui conditionnera l'accès aux droits spécifiques. Cette logique catégorielle, si elle permet l'accès à des droits, entraîne aussi des effets de stigmatisation qui alimenteront ultérieurement les débats sur la définition du handicap.</p>
+
+  <h3>La circulaire Veil (1966) et les catégories de déficiences</h3>
+
+  <p>Dans les années 1960, le ministère des Affaires Sociales entreprend de rationaliser les aides aux établissements selon les types de déficiences prises en charge. Cette catégorisation est formalisée par des textes réglementaires qui distinguent les établissements selon qu'ils accueillent des enfants déficients intellectuels, moteurs, sensoriels ou polyhandicapés.</p>
+
+  <p>Cette logique catégorielle aura des effets durables sur l'architecture du secteur médico-social : elle explique la multiplicité des types d'établissements (IME, ITEP, SESSAD, ESAT, etc.) qui caracterisent encore aujourd'hui le paysage institutionnel français.</p>
+
+  <!-- ACTIVITÉ 9 : Hotspot / exploration -->
+  <div class="interaction-zone">
+    <div class="interaction-label">Activité 9 · Les grandes catégories d'établissements</div>
+    <h4>Cliquez sur chaque type d'établissement pour découvrir sa mission</h4>
+    <div class="hotspot-diagram">
+      <h5>Les établissements et services médico-sociaux (ESMS) nés des Trente Glorieuses</h5>
+      <div class="hotspot-grid">
+        <button class="hotspot-btn" onclick="showHotspot(this, 'IME', 'check9')">IME</button>
+        <button class="hotspot-btn" onclick="showHotspot(this, 'ESAT', 'check9')">ESAT</button>
+        <button class="hotspot-btn" onclick="showHotspot(this, 'ITEP', 'check9')">ITEP</button>
+        <button class="hotspot-btn" onclick="showHotspot(this, 'SESSAD', 'check9')">SESSAD</button>
+        <button class="hotspot-btn" onclick="showHotspot(this, 'FAM', 'check9')">FAM</button>
+        <button class="hotspot-btn" onclick="showHotspot(this, 'MAS', 'check9')">MAS</button>
+      </div>
+      <div class="hotspot-result" id="hotspot-result"></div>
+    </div>
+    <span class="check-indicator" id="check9">✓ COMPLÉTÉ</span>
+  </div>
+
+</section>
+
+<!-- ===== PARTIE 5 : LOI 1975 ===== -->
+<div class="era-divider">
+  <h3>V — 1975 : la première grande loi d'orientation</h3>
+  <p>Rupture conceptuelle · Prévention · Intégration</p>
+</div>
+
+<section class="section">
+  <div class="section-era">Chapitre 5 · 1975</div>
+  <h2>La loi du 30 juin 1975 : l'État prend ses responsabilités</h2>
+
+  <p>Adoptée sous le gouvernement de Jacques Chirac, la loi du 30 juin 1975 d'orientation en faveur des personnes handicapées représente une véritable révolution dans la politique du handicap français. Pour la première fois, l'État affirme une obligation nationale envers les personnes handicapées et pose les bases d'un droit à la compensation.</p>
+
+  <div class="law-box">
+    <div class="law-badge">Loi fondatrice</div>
+    <h4>Loi n° 75-534 du 30 juin 1975 d'orientation en faveur des personnes handicapées</h4>
+    <ul>
+      <li><strong>Obligation nationale de prévention et de dépistage</strong> des handicaps dès la naissance</li>
+      <li><strong>Obligation scolaire</strong> étendue aux enfants handicapés</li>
+      <li>Création de la <strong>Commission Technique d'Orientation et de Reclassement Professionnel (COTOREP)</strong> pour les adultes</li>
+      <li>Création de la <strong>Commission Départementale de l'Éducation Spéciale (CDES)</strong> pour les enfants</li>
+      <li>Droit à une allocation adulte handicapé (AAH) et à une allocation compensatrice</li>
+      <li>Obligation pour les entreprises de plus de 20 salariés d'employer 10% de travailleurs handicapés</li>
+    </ul>
+  </div>
+
+  <p>Cette loi est concomitante avec la loi du 30 juin 1975 relative aux institutions sociales et médico-sociales, qui organise le contrôle et le financement de l'ensemble du secteur. Ces deux textes forment le socle législatif sur lequel le secteur médico-social va se développer pendant trente ans.</p>
+
+  <h3>Les limites de la loi de 1975</h3>
+
+  <p>Malgré son caractère fondateur, la loi de 1975 reste prisonnière d'une logique médicale et réparatrice du handicap. Elle définit la personne handicapée comme quelqu'un qui nécessite des soins, de l'éducation, de la réadaptation ou de l'insertion professionnelle — une vision centrée sur le déficit plutôt que sur les droits.</p>
+
+  <p>Par ailleurs, la loi consacre le modèle de la prise en charge en établissement spécialisé, au détriment du maintien à domicile et de l'inclusion dans les milieux ordinaires. Les établissements se multiplient, souvent bien loin des lieux de vie des personnes, créant une géographie de l'exclusion masquée sous le vernis de la protection.</p>
+
+  <!-- ACTIVITÉ 10 : Slider opinion -->
+  <div class="interaction-zone">
+    <div class="interaction-label">Activité 10 · Positionnement analytique</div>
+    <h4>Selon vous, la loi de 1975 est-elle plutôt une avancée ou une limite pour les droits des personnes handicapées ?</h4>
+    <p>Positionnez le curseur, puis justifiez votre réponse</p>
+    <div class="slider-zone">
+      <input type="range" min="0" max="100" value="50" id="slider-loi75" oninput="updateSlider('slider-loi75', 'slider-val-75')">
+      <div class="slider-labels">
+        <span>Limit importante</span>
+        <span>Avancée majeure</span>
+      </div>
+      <div class="slider-value" id="slider-val-75">Position neutre</div>
+    </div>
+    <div class="reflection-area" style="margin-top:16px;">
+      <textarea id="reflect-loi75" placeholder="Justifiez votre positionnement en vous appuyant sur les éléments lus..." oninput="checkReflection('reflect-loi75', 60, 'check10', 'rc2')"></textarea>
+      <div class="char-counter"><span id="rc2">0</span> mots — minimum : 60</div>
+    </div>
+    <span class="check-indicator" id="check10">✓ COMPLÉTÉ</span>
+  </div>
+
+</section>
+
+<!-- ===== PARTIE 6 : MODELES DU HANDICAP ===== -->
+<div class="era-divider">
+  <h3>VI — Les modèles théoriques du handicap</h3>
+  <p>CIH · PPH · CIF · Approche bio-psycho-sociale</p>
+</div>
+
+<section class="section">
+  <div class="section-era">Chapitre 6 · Théories et classifications</div>
+  <h2>Penser le handicap : des modèles en tension</h2>
+
+  <p>Parallèlement aux évolutions législatives, des chercheurs en médecine, en sociologie et en sciences humaines ont développé des modèles théoriques pour comprendre et définir le handicap. Ces modèles ne sont pas neutres : ils ont des implications directes sur les politiques publiques, les pratiques professionnelles et le regard social porté sur les personnes concernées.</p>
+
+  <h3>La Classification Internationale des Handicaps (CIH) de 1980</h3>
+
+  <p>En 1980, l'Organisation Mondiale de la Santé publie la Classification Internationale des Handicaps, élaborée sous la direction du médecin britannique <strong>Philip Wood</strong>. Cette classification distingue trois niveaux :</p>
+
+  <div class="figures-grid">
+    <div class="figure-card">
+      <div class="figure-name">La Déficience</div>
+      <div class="figure-dates">Niveau organique</div>
+      <p class="figure-desc">Toute perte ou anomalie d'une structure ou fonction psychologique, physiologique ou anatomique. Exemple : la perte auditive résultant d'une surdité congénitale.</p>
+    </div>
+    <div class="figure-card">
+      <div class="figure-name">L'Incapacité</div>
+      <div class="figure-dates">Niveau fonctionnel</div>
+      <p class="figure-desc">Toute réduction partielle ou totale de la capacité à accomplir une activité dans les limites considérées comme normales. Exemple : l'incapacité à percevoir la parole.</p>
+    </div>
+    <div class="figure-card">
+      <div class="figure-name">Le Désavantage</div>
+      <div class="figure-dates">Niveau social</div>
+      <p class="figure-desc">Situation de mise en infériorité résultant de la déficience ou de l'incapacité, qui limite ou interdit l'accomplissement d'un rôle social. Exemple : l'exclusion du marché du travail.</p>
+    </div>
+  </div>
+
+  <p>Ce modèle linéaire déficience → incapacité → désavantage est une avancée dans la mesure où il reconnaît les dimensions sociales du handicap. Mais il reste centré sur l'individu et ses manques, sans questionner l'environnement comme source du handicap.</p>
+
+  <h3>Le modèle québécois : la Classification du Processus de Production du Handicap (PPH)</h3>
+
+  <p>Dans les années 1980, le chercheur québécois <strong>Patrick Fougeyrollas</strong> développe une approche radicalement différente. Son modèle PPH considère que le handicap n'est pas une caractéristique de la personne mais le résultat d'une interaction entre les caractéristiques de la personne et celles de son environnement.</p>
+
+  <p>Dans cette conception, une situation de handicap est produite quand l'environnement physique, social ou culturel crée des obstacles que les caractéristiques de la personne ne lui permettent pas de surmonter. À l'inverse, un environnement facilitateur peut réduire ou éliminer les situations de handicap. Cette vision « situationnelle » du handicap est révolutionnaire : elle déplace la responsabilité de la personne vers la société.</p>
+
+  <div class="quote-block">
+    <p>Le handicap n'est pas une tragédie personnelle ni un problème médical individuel, mais le résultat de l'interaction entre des caractéristiques individuelles et les obstacles que présente l'environnement social.</p>
+    <cite>— Synthèse du modèle de production du handicap, Fougeyrollas (1988)</cite>
+  </div>
+
+  <!-- ACTIVITÉ 11 : Glisser-déposer conceptuel -->
+  <div class="interaction-zone">
+    <div class="interaction-label">Activité 11 · Modèles du handicap</div>
+    <h4>Classez ces éléments dans le bon modèle</h4>
+    <p>Glissez chaque élément vers le modèle correspondant <span class="check-indicator" id="check11">✓ COMPLÉTÉ</span></p>
+    <div style="margin-bottom:16px;">
+      <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:8px;" id="drag-source">
+        <div class="drag-chip" draggable="true" data-target="medical" ondragstart="dragChip(event)">La personne est le problème</div>
+        <div class="drag-chip" draggable="true" data-target="social" ondragstart="dragChip(event)">L'environnement crée le handicap</div>
+        <div class="drag-chip" draggable="true" data-target="medical" ondragstart="dragChip(event)">Traitement médical prioritaire</div>
+        <div class="drag-chip" draggable="true" data-target="social" ondragstart="dragChip(event)">Accessibilité universelle</div>
+        <div class="drag-chip" draggable="true" data-target="medical" ondragstart="dragChip(event)">Classification des déficiences</div>
+        <div class="drag-chip" draggable="true" data-target="social" ondragstart="dragChip(event)">Droits et citoyenneté</div>
+      </div>
+    </div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+      <div>
+        <div class="drag-label">Modèle médical/individuel</div>
+        <div class="drag-zone" id="drop-medical" ondragover="allowDrop(event)" ondrop="dropChip(event, 'medical', 'check11')"></div>
+      </div>
+      <div>
+        <div class="drag-label">Modèle social/environnemental</div>
+        <div class="drag-zone" id="drop-social" ondragover="allowDrop(event)" ondrop="dropChip(event, 'social', 'check11')"></div>
+      </div>
+    </div>
+    <div id="drag-feedback" style="font-size:0.9rem; margin-top:8px; color:var(--sage); display:none;"></div>
+  </div>
+
+  <h3>La Classification Internationale du Fonctionnement (CIF) de 2001</h3>
+
+  <p>En 2001, l'OMS publie une nouvelle classification, la CIF (Classification Internationale du Fonctionnement, du handicap et de la santé), qui remplace la CIH de 1980. Cette révision intègre les critiques des mouvements de personnes handicapées et des chercheurs comme Fougeyrollas.</p>
+
+  <p>La CIF adopte une approche biopsychosociale qui considère simultanément les facteurs personnels (déficiences, limitations d'activité) et les facteurs environnementaux (barrières ou facilitateurs). Elle reconnaît que le même état de santé peut produire des situations de handicap très différentes selon l'environnement dans lequel vit la personne.</p>
+
+  <p>Cette révision conceptuelle aura des conséquences pratiques considérables : elle légitime les demandes d'accessibilité universelle, fonde les politiques d'aménagement raisonnable, et introduit la notion de « participation sociale » comme horizon de l'accompagnement médico-social.</p>
+
+</section>
+
+<!-- ===== PARTIE 7 : LOI 2002 & 2005 ===== -->
+<div class="era-divider">
+  <h3>VII — Les lois de 2002 et 2005 : le tournant des droits</h3>
+  <p>Droits des usagers · Accessibilité · Compensation · MDPH</p>
+</div>
+
+<section class="section">
+  <div class="section-era">Chapitre 7 · 2002–2005</div>
+  <h2>La révolution des droits : les lois fondatrices du XXIe siècle</h2>
+
+  <p>Les années 2000 marquent un tournant fondamental dans la politique française du handicap. Deux lois majeures restructurent l'ensemble du secteur médico-social et redéfinissent les droits des personnes concernées, abandonnant le paradigme de la protection pour adopter celui des droits et de la citoyenneté.</p>
+
+  <h3>La loi du 2 janvier 2002 : les droits des usagers</h3>
+
+  <div class="law-box">
+    <div class="law-badge">Loi 2002-2</div>
+    <h4>Loi rénovant l'action sociale et médico-sociale</h4>
+    <ul>
+      <li><strong>7 droits fondamentaux</strong> reconnus aux usagers des établissements médico-sociaux : respect de la dignité, vie privée, libre choix, autodétermination, accès à l'information, confidentialité, accès aux soins</li>
+      <li>Obligation pour chaque établissement de remettre un <strong>livret d'accueil</strong> et de conclure un <strong>contrat de séjour</strong> ou document individuel de prise en charge (DIPC)</li>
+      <li>Création obligatoire d'un <strong>Conseil de la Vie Sociale (CVS)</strong> ou d'autre instance participative</li>
+      <li>Obligation d'un <strong>Projet d'Établissement</strong> quinquennal et d'une évaluation interne/externe</li>
+      <li>Création du <strong>Projet Personnalisé d'Accompagnement (PPA)</strong>, co-construit avec la personne</li>
+    </ul>
+  </div>
+
+  <p>Cette loi représente une rupture philosophique majeure : la personne accueillie cesse d'être un « bénéficiaire » passif de l'aide sociale pour devenir un <strong>usager-citoyen</strong> avec des droits exigibles. L'outil clé est le Projet Personnalisé d'Accompagnement (PPA), qui doit être élaboré avec et pour la personne concernée, en prenant en compte ses aspirations, ses besoins et ses potentialités.</p>
+
+  <!-- ACTIVITÉ 12 : Les 7 droits en accordéon -->
+  <div class="interaction-zone">
+    <div class="interaction-label">Activité 12 · Les droits des usagers</div>
+    <h4>Explorez chacun des 7 droits de la loi 2002-2 <span class="check-indicator" id="check12">✓ COMPLÉTÉ</span></h4>
+    <div id="accordion2">
+      <div class="accordion-item"><button class="accordion-header" onclick="toggleAccordion(this,'accordion2',12)">1. Droit au respect de la dignité<span class="accordion-icon">+</span></button><div class="accordion-content"><p>Toute personne accueillie doit être traitée avec respect, sans discrimination liée à son âge, son sexe, son origine, son état de santé ou son handicap. Ce droit implique notamment le respect des convictions religieuses et politiques, et la lutte contre la maltraitance sous toutes ses formes.</p></div></div>
+      <div class="accordion-item"><button class="accordion-header" onclick="toggleAccordion(this,'accordion2',12)">2. Droit à la vie privée et à l'intimité<span class="accordion-icon">+</span></button><div class="accordion-content"><p>Les établissements doivent garantir un espace d'intimité aux personnes accueillies, notamment pour la correspondance, les visites, la vie sentimentale et sexuelle. Ce droit est particulièrement complexe à mettre en œuvre dans les hébergements collectifs.</p></div></div>
+      <div class="accordion-item"><button class="accordion-header" onclick="toggleAccordion(this,'accordion2',12)">3. Droit au libre choix des prestations<span class="accordion-icon">+</span></button><div class="accordion-content"><p>La personne doit pouvoir choisir entre les prestations disponibles et entre différents prestataires. Ce droit se heurte souvent à la réalité des listes d'attente et à la faible densité d'établissements dans certaines zones géographiques.</p></div></div>
+      <div class="accordion-item"><button class="accordion-header" onclick="toggleAccordion(this,'accordion2',12)">4. Droit à l'autodétermination<span class="accordion-icon">+</span></button><div class="accordion-content"><p>La personne doit pouvoir participer à la définition de son projet personnalisé et prendre des décisions concernant sa propre vie. Ce droit implique une posture professionnelle d'accompagnement et non de substitution à la personne.</p></div></div>
+      <div class="accordion-item"><button class="accordion-header" onclick="toggleAccordion(this,'accordion2',12)">5. Droit à l'accès à l'information<span class="accordion-icon">+</span></button><div class="accordion-content"><p>Toute personne a droit à une information claire sur ses droits, sur les prestations disponibles, sur son dossier. Cette information doit être accessible (FALC - Facile À Lire et à Comprendre pour les personnes déficientes intellectuelles).</p></div></div>
+      <div class="accordion-item"><button class="accordion-header" onclick="toggleAccordion(this,'accordion2',12)">6. Droit à la confidentialité<span class="accordion-icon">+</span></button><div class="accordion-content"><p>Les informations concernant la personne (santé, situation familiale, financière) ne peuvent être communiquées qu'avec son consentement, dans le cadre strict du secret professionnel et du partage d'informations nécessaires à la continuité de l'accompagnement.</p></div></div>
+      <div class="accordion-item"><button class="accordion-header" onclick="toggleAccordion(this,'accordion2',12)">7. Droit à l'accès aux soins et à la prévention<span class="accordion-icon">+</span></button><div class="accordion-content"><p>Les établissements médico-sociaux doivent garantir l'accès aux soins de santé aux personnes accueillies, qu'il s'agisse de soins courants, de suivi spécialisé ou de prévention. Ce droit implique une articulation avec le secteur sanitaire.</p></div></div>
+    </div>
+  </div>
+
+  <h3>La loi du 11 février 2005 : pour l'égalité des droits et des chances</h3>
+
+  <p>Trois ans après la loi 2002-2, la loi du 11 février 2005 « pour l'égalité des droits et des chances, la participation et la citoyenneté des personnes handicapées » constitue la réforme la plus complète jamais menée en France dans ce domaine. Adoptée sous la présidence de Jacques Chirac — dont le fils est handicapé, ce qui a influencé son engagement personnel — cette loi opère une révolution conceptuelle.</p>
+
+  <div class="law-box">
+    <div class="law-badge">Texte majeur</div>
+    <h4>Les apports essentiels de la loi 2005</h4>
+    <ul>
+      <li><strong>Nouvelle définition du handicap</strong> (art. 2) : « Constitue un handicap toute limitation d'activité ou restriction de participation à la vie en société subie dans son environnement par une personne en raison d'une altération substantielle, durable ou définitive d'une ou plusieurs fonctions physiques, sensorielles, mentales, cognitives ou psychiques, d'un polyhandicap ou d'un trouble de santé invalidant »</li>
+      <li><strong>Droit à compensation</strong> : création de la Prestation de Compensation du Handicap (PCH), individualisée et portant sur les besoins réels de la personne</li>
+      <li><strong>Accessibilité universelle</strong> : obligation d'accessibilité de tous les établissements recevant du public, transports, voirie, logements neufs — avec des délais (initialement 2015)</li>
+      <li><strong>Création des MDPH</strong> (Maisons Départementales des Personnes Handicapées) : guichet unique remplaçant COTOREP et CDES</li>
+      <li><strong>Scolarisation en milieu ordinaire</strong> : droit à la scolarisation pour tous les enfants handicapés, avec des AESH (Accompagnants d'Élèves en Situation de Handicap)</li>
+      <li><strong>Obligation d'emploi</strong> renforcée : quota de 6% maintenu, création de l'AGEFIPH et du FIPHFP</li>
+    </ul>
+  </div>
+
+  <!-- ACTIVITÉ 13 : Vrai/faux -->
+  <div class="interaction-zone">
+    <div class="interaction-label">Activité 13 · Vrai ou faux</div>
+    <h4>La loi de 2005 : testez vos connaissances</h4>
+    <div id="vf-container">
+      <div class="vf-item" style="margin-bottom:16px; padding:12px; background:var(--parchment); border:1px solid var(--border);">
+        <p style="margin-bottom:8px; font-size:0.95rem;">La loi de 2005 maintient la même définition du handicap que la loi de 1975.</p>
+        <button class="btn btn-secondary" onclick="checkVF(this, false, 'vf1')">VRAI</button>
+        <button class="btn btn-secondary" onclick="checkVF(this, true, 'vf1')">FAUX</button>
+        <div id="vf1" style="font-size:0.85rem; margin-top:8px; display:none; color:var(--sage);">FAUX ✓ — La loi de 2005 introduit une définition entièrement nouvelle, centrée sur la restriction de participation en lien avec l'environnement.</div>
+      </div>
+      <div class="vf-item" style="margin-bottom:16px; padding:12px; background:var(--parchment); border:1px solid var(--border);">
+        <p style="margin-bottom:8px; font-size:0.95rem;">La MDPH est un guichet unique qui remplace la COTOREP et la CDES.</p>
+        <button class="btn btn-secondary" onclick="checkVF(this, true, 'vf2')">VRAI</button>
+        <button class="btn btn-secondary" onclick="checkVF(this, false, 'vf2')">FAUX</button>
+        <div id="vf2" style="font-size:0.85rem; margin-top:8px; display:none; color:var(--sage);">VRAI ✓ — La MDPH centralise l'évaluation des besoins, les demandes de droits (AAH, PCH, orientations) et les décisions de la CDAPH.</div>
+      </div>
+      <div class="vf-item" style="margin-bottom:16px; padding:12px; background:var(--parchment); border:1px solid var(--border);">
+        <p style="margin-bottom:8px; font-size:0.95rem;">La PCH est une prestation forfaitaire identique pour tous les bénéficiaires.</p>
+        <button class="btn btn-secondary" onclick="checkVF(this, false, 'vf3')">VRAI</button>
+        <button class="btn btn-secondary" onclick="checkVF(this, true, 'vf3')">FAUX</button>
+        <div id="vf3" style="font-size:0.85rem; margin-top:8px; display:none; color:var(--sage);">FAUX ✓ — La PCH est individualisée : son montant est déterminé en fonction des besoins spécifiques de chaque personne, évalués par l'équipe pluridisciplinaire de la MDPH.</div>
+      </div>
+    </div>
+    <span class="check-indicator" id="check13">✓ COMPLÉTÉ</span>
+  </div>
+
+</section>
+
+<!-- ===== PARTIE 8 : PSYCHIATRIE ===== -->
+<div class="era-divider">
+  <h3>VIII — Histoire de la psychiatrie et du handicap psychique</h3>
+  <p>Asiles · Psychothérapie institutionnelle · Sectorisation · Désinstitutionnalisation</p>
+</div>
+
+<section class="section">
+  <div class="section-era">Chapitre 8 · Psychiatrie et handicap psychique</div>
+  <h2>Du grand renfermement à la psychiatrie de secteur</h2>
+
+  <p>L'histoire de la prise en charge du handicap psychique est indissociable de celle de la psychiatrie. Ces deux histoires se croisent, se séparent, se retrouvent — dans des tensions toujours vives entre le paradigme médical (traiter la maladie) et le paradigme social (accompagner la personne dans sa vie).</p>
+
+  <h3>La psychiatrie asilaire et ses dérives</h3>
+
+  <p>Tout au long du XIXe siècle et de la première moitié du XXe, les asiles psychiatriques accueillent des populations très hétérogènes : personnes souffrant de troubles mentaux sévères, épileptiques, déficients intellectuels, et même personnes socialement marginalisées. Ces établissements, conçus à l'origine pour soigner, deviennent rapidement des lieux d'enfermement à vie.</p>
+
+  <p>La Seconde Guerre mondiale révèle la face sombre de cette institutionnalisation : entre 1940 et 1944, environ <strong>40 000 malades mentaux meurent dans les hôpitaux psychiatriques français</strong>, victimes de la faim (les rations alimentaires des hôpitaux psychiatriques sont coupées en priorité en période de pénurie), du froid et de maladies non soignées. Ce scandale resté longtemps tu a été mis en lumière par l'historienne Isabelle von Bueltzingsloewen dans ses travaux sur « l'hécatombe des fous ».</p>
+
+  <div class="quote-block">
+    <p>Le constat de la mort de masse dans les asiles pendant la guerre a profondément marqué une génération de psychiatres qui allaient devenir les réformateurs du secteur dans les années 1950-1970.</p>
+    <cite>— Synthèse des travaux sur la réforme psychiatrique française</cite>
+  </div>
+
+  <h3>La psychothérapie institutionnelle : soigner autrement</h3>
+
+  <p><strong>François Tosquelles</strong> (1912-1994), psychiatre espagnol réfugié en France, est l'une des figures les plus importantes de la réforme psychiatrique. À l'hôpital Saint-Alban (Lozère), il développe avec des collègues comme <strong>Lucien Bonnafé</strong> et <strong>Jean Oury</strong> les principes de la <em>psychothérapie institutionnelle</em> : l'institution elle-même doit être thérapeutique, par la qualité des relations humaines, l'organisation du travail collectif et la créativité.</p>
+
+  <p>Saint-Alban devient pendant la guerre un lieu de résistance à la fois politique (réseau de résistants, cache de maquisards) et thérapeutique. Le peintre surréaliste <strong>Paul Éluard</strong> s'y cache, et des artistes comme Jean Dubuffet y découvrent l'art des patients — ce qui donnera naissance à l'<em>Art Brut</em>.</p>
+
+  <p><strong>Jean Oury</strong> fondera en 1953 la Clinique de La Borde (Cour-Cheverny), qui devient le laboratoire mondial de la psychothérapie institutionnelle. Le philosophe <strong>Félix Guattari</strong> y travaillera pendant plusieurs décennies, développant ses théories sur la subjectivité et l'institution.</p>
+
+  <!-- ACTIVITÉ 14 : Frise interactive -->
+  <div class="interaction-zone">
+    <div class="interaction-label">Activité 14 · Repères chronologiques psychiatrie</div>
+    <h4>Cliquez sur chaque étape pour découvrir sa signification <span class="check-indicator" id="check14">✓ COMPLÉTÉ</span></h4>
+    <div id="accordion3">
+      <div class="accordion-item"><button class="accordion-header" onclick="toggleAccordion(this,'accordion3',14)">1838 — Première loi psychiatrique<span class="accordion-icon">+</span></button><div class="accordion-content"><p>Loi Esquirol organisant l'internement dans les asiles. Distingue placement volontaire et placement d'office. Restera en vigueur jusqu'en 1990.</p></div></div>
+      <div class="accordion-item"><button class="accordion-header" onclick="toggleAccordion(this,'accordion3',14)">1952 — La Chlorpromazine<span class="accordion-icon">+</span></button><div class="accordion-content"><p>Découverte de la chlorpromazine (Largactil) par Henri Laborit et Jean Delay. Premier neuroleptique efficace, il révolutionne le traitement des psychoses. Permet des rémissions partielles et ouvre la voie aux sorties d'hôpital. Mais aussi risque de transformer la chimie en substitut à la psychiatrie relationnelle.</p></div></div>
+      <div class="accordion-item"><button class="accordion-header" onclick="toggleAccordion(this,'accordion3',14)">1960 — La circulaire de sectorisation<span class="accordion-icon">+</span></button><div class="accordion-content"><p>La circulaire du 15 mars 1960 crée le secteur psychiatrique : chaque secteur géographique dispose d'une équipe psychiatrique qui assure le suivi des patients avant, pendant et après l'hospitalisation. Fin du monopole de l'asile, naissance du suivi ambulatoire et de la psychiatrie de proximité.</p></div></div>
+      <div class="accordion-item"><button class="accordion-header" onclick="toggleAccordion(this,'accordion3',14)">1975 — Anti-psychiatrie et désinstitutionnalisation<span class="accordion-icon">+</span></button><div class="accordion-content"><p>Le mouvement anti-psychiatrique (R.D. Laing en Angleterre, Franco Basaglia en Italie, Thomas Szasz aux États-Unis) remet en cause la psychiatrie comme instrument de contrôle social. En Italie, la loi Basaglia (1978) ferme progressivement les asiles. En France, la désinstitutionnalisation sera plus progressive.</p></div></div>
+      <div class="accordion-item"><button class="accordion-header" onclick="toggleAccordion(this,'accordion3',14)">1990 — Nouvelle loi psychiatrique<span class="accordion-icon">+</span></button><div class="accordion-content"><p>La loi du 27 juin 1990 remplace enfin la loi de 1838. Elle encadre les hospitalisations sans consentement, crée la Commission Départementale des Hospitalisations Psychiatriques (CDHP) et renforce les droits des patients. Elle sera à son tour révisée en 2011 et 2013.</p></div></div>
+      <div class="accordion-item"><button class="accordion-header" onclick="toggleAccordion(this,'accordion3',14)">2005 — Reconnaissance du handicap psychique<span class="accordion-icon">+</span></button><div class="accordion-content"><p>La loi de 2005 reconnaît explicitement le handicap psychique comme une catégorie spécifique, distincte du handicap mental (déficience intellectuelle) et du handicap cognitif. Cette reconnaissance ouvre de nouveaux droits et structures d'accompagnement (SAMSAH, GEM...).</p></div></div>
+    </div>
+  </div>
+
+  <h3>Le handicap psychique aujourd'hui : un enjeu de l'interface sanitaire/médico-social</h3>
+
+  <p>Depuis les années 2000, la question du handicap psychique est devenue l'un des enjeux majeurs du secteur médico-social. La désinstitutionnalisation progressive des hôpitaux psychiatriques a transféré une partie de la charge aux ESMS, sans que les moyens aient toujours suivi.</p>
+
+  <p>Les <strong>Groupes d'Entraide Mutuelle (GEM)</strong>, créés par la loi de 2005, illustrent une approche novatrice : des associations autogérées par les personnes elles-mêmes, qui se retrouvent pour des activités sociales et culturelles, hors du cadre médical ou institutionnel. Les GEM incarnent le modèle du <em>pair-aidance</em> — l'expertise des personnes qui ont elles-mêmes vécu l'expérience des troubles psychiques.</p>
+
+</section>
+
+<!-- ===== PARTIE 9 : GRAND NOMS ET ORGANISMES ACTUELS ===== -->
+<div class="era-divider">
+  <h3>IX — Les grandes organisations aujourd'hui</h3>
+  <p>Panorama du secteur contemporain</p>
+</div>
+
+<section class="section">
+  <div class="section-era">Chapitre 9 · Paysage institutionnel actuel</div>
+  <h2>Les acteurs du médico-social contemporain</h2>
+
+  <p>Le secteur médico-social français est aujourd'hui l'un des plus structurés d'Europe, avec près de 40 000 établissements et services accueillant plus de deux millions de personnes (personnes âgées, personnes handicapées, enfance en difficulté). Il emploie environ 800 000 professionnels et est financé principalement par l'Assurance Maladie, les Conseils Départementaux et l'État.</p>
+
+  <h3>Les grandes fédérations du secteur handicap</h3>
+
+  <div class="orgs-grid">
+    <div class="org-card">
+      <div class="org-acronym">UNAPEI</div>
+      <div class="org-name">Union Nationale des Associations de Parents</div>
+      <p class="org-role">550 associations affiliées, 3 000 établissements, plus de 200 000 personnes accompagnées. Représente principalement le handicap mental et cognitif.</p>
+    </div>
+    <div class="org-card">
+      <div class="org-acronym">APF France Handicap</div>
+      <div class="org-name">ex-Association des Paralysés de France</div>
+      <p class="org-role">Gère 450 structures, milite pour les droits des personnes handicapées moteur et polyhandicapées. Forte présence dans le débat public.</p>
+    </div>
+    <div class="org-card">
+      <div class="org-acronym">FEHAP</div>
+      <div class="org-name">Fédération des Établissements Hospitaliers et Sanitaires Privés</div>
+      <p class="org-role">Représente les établissements à but non lucratif dans le sanitaire ET le médico-social. Lien institutionnel majeur entre les deux secteurs.</p>
+    </div>
+    <div class="org-card">
+      <div class="org-acronym">Nexem</div>
+      <div class="org-name">Fédération des employeurs du social, médico-social</div>
+      <p class="org-role">Issue de la fusion de plusieurs fédérations, représente plus de 15 000 établissements. Interlocuteur patronal principal dans les négociations de branche.</p>
+    </div>
+    <div class="org-card">
+      <div class="org-acronym">Croix-Rouge</div>
+      <div class="org-name">Croix-Rouge française</div>
+      <p class="org-role">Gère un vaste réseau d'ESMS (médico-social, sanitaire, social) à travers toute la France. Forte dimension internationale et humanitaire.</p>
+    </div>
+    <div class="org-card">
+      <div class="org-acronym">MDPH</div>
+      <div class="org-name">Maisons Départementales des Personnes Handicapées</div>
+      <p class="org-role">Guichet unique créé par la loi 2005. Évalue les besoins, attribue les droits (AAH, PCH, RQTH), décide des orientations via la CDAPH. Une par département.</p>
+    </div>
+    <div class="org-card">
+      <div class="org-acronym">CNSA</div>
+      <div class="org-name">Caisse Nationale de Solidarité pour l'Autonomie</div>
+      <p class="org-role">Financeur principal des MDPH et des ESMS pour les personnes âgées et handicapées. Finance la perte d'autonomie via la contribution solidarité autonomie (CRSA).</p>
+    </div>
+    <div class="org-card">
+      <div class="org-acronym">ANESM / HAS</div>
+      <div class="org-name">Haute Autorité de Santé</div>
+      <p class="org-role">Depuis 2018, la HAS a intégré l'ANESM et évalue la qualité des ESMS. Produit des recommandations de bonnes pratiques professionnelles (RBPP) qui guident les équipes.</p>
+    </div>
+  </div>
+
+  <!-- ACTIVITÉ 15 : Glisser les organes dans leur catégorie -->
+  <div class="interaction-zone">
+    <div class="interaction-label">Activité 15 · Qui finance quoi ?</div>
+    <h4>Associez chaque acteur à son rôle principal</h4>
+    <p>Cliquez d'abord sur un acteur, puis sur son rôle <span class="check-indicator" id="check15">✓ COMPLÉTÉ</span></p>
+    <div class="match-container" id="match2">
+      <div class="match-col" id="match2-left">
+        <button class="match-item" onclick="selectMatch(this, 'left', 'match2')">CNSA</button>
+        <button class="match-item" onclick="selectMatch(this, 'left', 'match2')">MDPH</button>
+        <button class="match-item" onclick="selectMatch(this, 'left', 'match2')">HAS</button>
+        <button class="match-item" onclick="selectMatch(this, 'left', 'match2')">Conseil Départemental</button>
+      </div>
+      <div class="match-col" id="match2-right">
+        <button class="match-item" onclick="selectMatch(this, 'right', 'match2')" data-match="HAS">Évalue la qualité des ESMS et produit des recommandations</button>
+        <button class="match-item" onclick="selectMatch(this, 'right', 'match2')" data-match="Conseil Départemental">Finance l'aide sociale à l'hébergement et l'APA</button>
+        <button class="match-item" onclick="selectMatch(this, 'right', 'match2')" data-match="CNSA">Finance la perte d'autonomie et les MDPH</button>
+        <button class="match-item" onclick="selectMatch(this, 'right', 'match2')" data-match="MDPH">Évalue les besoins et attribue les droits aux personnes handicapées</button>
+      </div>
+    </div>
+    <div id="match2-feedback" style="font-size:0.9rem; margin-top:8px; color:var(--sage);"></div>
+  </div>
+
+  <h3>L'interface sanitaire / médico-social : un enjeu contemporain</h3>
+
+  <p>L'une des tensions les plus vives dans le secteur contemporain est celle qui existe entre le monde sanitaire (hôpitaux, cliniques, médecine de ville) et le monde médico-social (ESMS). Ces deux univers ont des logiques, des cultures professionnelles, des modes de financement et des temporalités très différentes.</p>
+
+  <p>Le sanitaire fonctionne sur la logique du soin aigu : traiter, guérir, stabiliser, puis sortir. Le médico-social fonctionne sur la logique de l'accompagnement dans la durée. Ces deux logiques se heurtent régulièrement dans la réalité des personnes qui ont besoin des deux — notamment les personnes souffrant de troubles psychiques, les personnes polyhandicapées ou les personnes âgées avec des pathologies complexes.</p>
+
+  <div class="highlight-box">
+    <h4>Les SAMSAH et la question de la coordination</h4>
+    <p>Les Services d'Accompagnement Médico-Social pour Adultes Handicapés (SAMSAH) incarnent cette tentative de décloisonnement. Ils assurent à la fois un accompagnement médical et social au domicile, tentant de faire le pont entre les deux secteurs. Ils représentent la forme la plus aboutie de ce que le secteur appelle « l'approche globale de la personne ».</p>
+  </div>
+
+  <!-- ACTIVITÉ 16 : Réflexion sur le décloisonnement -->
+  <div class="interaction-zone">
+    <div class="interaction-label">Activité 16 · Analyse de situation</div>
+    <h4>Exercice de mise en situation</h4>
+    <p>M. Thomas, 42 ans, souffre de schizophrénie stabilisée et présente également une déficience motrice suite à un accident de la route. Il vit seul et ses hospitalisations psychiatriques répétées rendent son accompagnement médico-social complexe. Quels acteurs seraient impliqués dans son parcours, et quelles seraient les tensions potentielles entre eux ?</p>
+    <div class="reflection-area">
+      <textarea id="reflect-ms1" placeholder="Identifiez les acteurs du secteur sanitaire, du secteur médico-social et les modalités de coordination possibles..." oninput="checkReflection('reflect-ms1', 80, 'check16', 'rc3')"></textarea>
+      <div class="char-counter"><span id="rc3">0</span> mots — minimum : 80</div>
+    </div>
+    <span class="check-indicator" id="check16">✓ COMPLÉTÉ</span>
+  </div>
+
+</section>
+
+<!-- ===== PARTIE 10 : ENJEUX CONTEMPORAINS ===== -->
+<div class="era-divider">
+  <h3>X — Les enjeux contemporains</h3>
+  <p>Inclusion · Autodétermination · Pair-aidance · Numérique</p>
+</div>
+
+<section class="section">
+  <div class="section-era">Chapitre 10 · Le secteur aujourd'hui</div>
+  <h2>Les grands débats contemporains du secteur</h2>
+
+  <p>Le secteur médico-social du début du XXIe siècle est travaillé par plusieurs grandes tensions et transformations qui redessinent en profondeur les pratiques professionnelles, les structures institutionnelles et les politiques publiques.</p>
+
+  <h3>Du paradigme de la protection à celui des droits</h3>
+
+  <p>La transformation la plus profonde est sans doute le passage d'un paradigme de la <em>protection</em> à un paradigme des <em>droits</em>. Pendant longtemps, le secteur médico-social a fonctionné sur une logique bienveillante mais paternaliste : les professionnels savaient ce qui était bon pour les personnes, et les protégeaient en décidant à leur place.</p>
+
+  <p>Cette logique est aujourd'hui fortement remise en cause par les mouvements de personnes handicapées elles-mêmes, par les évolutions législatives (Convention ONU de 2006, loi 2005) et par une nouvelle génération de professionnels. Le concept d'<strong>autodétermination</strong> — le droit de choisir sa propre vie, d'assumer des risques, de faire des erreurs — est au cœur de cette révolution culturelle.</p>
+
+  <h3>La Convention des Nations Unies relative aux droits des personnes handicapées (2006)</h3>
+
+  <p>Adoptée en 2006 et ratifiée par la France en 2010, la Convention ONU est un texte de référence international. Son article 19 consacre le droit de vivre dans la société, avec des services de soutien à domicile, et s'oppose explicitement à l'institutionnalisation forcée. Son article 12 reconnaît la capacité juridique égale de toutes les personnes handicapées.</p>
+
+  <p>Ces principes sont encore loin d'être pleinement appliqués en France : le Comité ONU a critiqué à plusieurs reprises le modèle français, jugé trop institutionnel et insuffisamment inclusif.</p>
+
+  <!-- ACTIVITÉ 17 : QCM sur les enjeux actuels -->
+  <div class="interaction-zone">
+    <div class="interaction-label">Activité 17 · Testez vos connaissances</div>
+    <h4>Concepts contemporains : vrai ou faux ?</h4>
+    <div id="vf2-container">
+      <div style="margin-bottom:16px; padding:12px; background:var(--parchment); border:1px solid var(--border);">
+        <p style="margin-bottom:8px; font-size:0.95rem;">La pair-aidance désigne l'accompagnement assuré par des professionnels ayant une expérience vécue du handicap.</p>
+        <button class="btn btn-secondary" onclick="checkVF2(this, true, 'vf2-1')">VRAI</button>
+        <button class="btn btn-secondary" onclick="checkVF2(this, false, 'vf2-1')">FAUX</button>
+        <div id="vf2-1" style="font-size:0.85rem; margin-top:8px; display:none; color:var(--sage);">VRAI ✓ — La pair-aidance valorise l'expertise des personnes qui ont vécu elles-mêmes l'expérience d'un trouble ou d'un handicap pour accompagner leurs pairs.</div>
+      </div>
+      <div style="margin-bottom:16px; padding:12px; background:var(--parchment); border:1px solid var(--border);">
+        <p style="margin-bottom:8px; font-size:0.95rem;">La France a ratifié la Convention ONU sur les droits des personnes handicapées dès 2006.</p>
+        <button class="btn btn-secondary" onclick="checkVF2(this, false, 'vf2-2')">VRAI</button>
+        <button class="btn btn-secondary" onclick="checkVF2(this, true, 'vf2-2')">FAUX</button>
+        <div id="vf2-2" style="font-size:0.85rem; margin-top:8px; display:none; color:var(--sage);">FAUX ✓ — La France a ratifié la Convention en 2010, soit quatre ans après son adoption par l'ONU.</div>
+      </div>
+      <div style="margin-bottom:16px; padding:12px; background:var(--parchment); border:1px solid var(--border);">
+        <p style="margin-bottom:8px; font-size:0.95rem;">Le FALC (Facile à Lire et à Comprendre) est une méthode de rédaction adaptée aux personnes déficientes intellectuelles.</p>
+        <button class="btn btn-secondary" onclick="checkVF2(this, true, 'vf2-3')">VRAI</button>
+        <button class="btn btn-secondary" onclick="checkVF2(this, false, 'vf2-3')">FAUX</button>
+        <div id="vf2-3" style="font-size:0.85rem; margin-top:8px; display:none; color:var(--sage);">VRAI ✓ — Le FALC est un standard européen de rédaction qui rend l'information accessible aux personnes ayant des difficultés de compréhension.</div>
+      </div>
+    </div>
+    <span class="check-indicator" id="check17">✓ COMPLÉTÉ</span>
+  </div>
+
+  <h3>La désinstitutionnalisation : promesse et défis</h3>
+
+  <p>La <strong>désinstitutionnalisation</strong> — le mouvement de réduction du recours aux structures d'hébergement collectif au profit du soutien à domicile et en milieu ordinaire — est l'un des chantiers les plus importants et les plus complexes du secteur contemporain.</p>
+
+  <p>La France accuse un retard significatif par rapport à d'autres pays européens comme la Suède, les Pays-Bas ou l'Italie. Le rapport Jeannet-Vachey de 2022 sur la désinstitutionnalisation en France préconise un plan ambitieux pour développer les services à domicile et les nouvelles formes d'habitat inclusif.</p>
+
+  <p>L'<strong>habitat inclusif</strong> — des logements ordinaires partagés par des personnes handicapées ou âgées, avec des services d'accompagnement mutualisés — représente une alternative prometteuse aux grandes structures institutionnelles. Financé par l'Aide à la Vie Partagée (AVP), il peine encore à se développer à grande échelle faute de moyens suffisants.</p>
+
+  <h3>Le numérique comme outil d'inclusion et d'accessibilité</h3>
+
+  <p>Les technologies numériques offrent des opportunités nouvelles pour l'autonomie des personnes handicapées : synthèses vocales, technologies d'assistance, solutions de commande par le regard, applications de communication alternative... Mais elles créent aussi de nouvelles formes d'exclusion pour ceux qui n'y ont pas accès ou qui ne maîtrisent pas ces outils.</p>
+
+  <p>La loi pour une République numérique (2016) et les textes européens sur l'accessibilité numérique imposent des obligations aux services publics en ligne. Pourtant, l'accessibilité numérique reste insuffisamment mise en œuvre dans la réalité des sites internet publics et des administrations.</p>
+
+  <!-- ACTIVITÉ 18 : Réflexion synthétique -->
+  <div class="interaction-zone">
+    <div class="interaction-label">Activité 18 · Synthèse personnelle</div>
+    <h4>Évolution du regard sur le handicap : retracez les grandes transformations</h4>
+    <p>En vous appuyant sur l'ensemble de ce que vous avez lu, rédigez une synthèse des évolutions du regard social sur le handicap depuis l'Antiquité. Identifiez les trois ruptures qui vous semblent les plus significatives. (minimum 120 mots) <span class="check-indicator" id="check18">✓ COMPLÉTÉ</span></p>
+    <div class="reflection-area">
+      <textarea id="reflect-synth" style="min-height:180px;" placeholder="Antiquité → Charité chrétienne → Grand renfermement → Médicalisation → Droits et citoyenneté... Quelles sont les ruptures les plus profondes ?" oninput="checkReflection('reflect-synth', 120, 'check18', 'rc4')"></textarea>
+      <div class="char-counter"><span id="rc4">0</span> mots — minimum : 120</div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ===== QCM FINAL ===== -->
+<div id="qcm-section">
+  <div class="qcm-wrapper">
+    <div class="qcm-era">Évaluation finale</div>
+    <h2>Questionnaire de Validation</h2>
+    <p class="intro">10 questions pour valider vos connaissances et débloquer votre badge de réalisation. Chaque question n'accepte qu'une seule réponse. Lisez attentivement chaque proposition.</p>
+
+    <div class="qcm-question" id="q1">
+      <div class="qcm-q-num">QUESTION 01 / 10</div>
+      <div class="qcm-q-text">Quelle est la définition légale française du handicap, issue de la loi de 2005 ?</div>
+      <div class="qcm-options">
+        <button class="qcm-option" onclick="answerQCM(1, 'a', this)">A. Toute déficience physique ou mentale limitant les activités de la vie quotidienne</button>
+        <button class="qcm-option" onclick="answerQCM(1, 'b', this)">B. Toute limitation d'activité ou restriction de participation subie dans son environnement par une personne en raison d'une altération durable d'une ou plusieurs fonctions</button>
+        <button class="qcm-option" onclick="answerQCM(1, 'c', this)">C. Toute incapacité reconnue par la MDPH donnant droit à l'AAH</button>
+        <button class="qcm-option" onclick="answerQCM(1, 'd', this)">D. Toute maladie chronique invalidante reconnue par l'Assurance Maladie</button>
+      </div>
+      <div class="qcm-feedback" id="fb-q1"></div>
+    </div>
+
+    <div class="qcm-question" id="q2">
+      <div class="qcm-q-num">QUESTION 02 / 10</div>
+      <div class="qcm-q-text">Quel médecin est à l'origine du retrait des chaînes aux aliénés à l'asile de Bicêtre, vers 1793 ?</div>
+      <div class="qcm-options">
+        <button class="qcm-option" onclick="answerQCM(2, 'a', this)">A. Jean-Étienne Esquirol</button>
+        <button class="qcm-option" onclick="answerQCM(2, 'b', this)">B. Philippe Pinel</button>
+        <button class="qcm-option" onclick="answerQCM(2, 'c', this)">C. Jean Itard</button>
+        <button class="qcm-option" onclick="answerQCM(2, 'd', this)">D. Jean Colombier</button>
+      </div>
+      <div class="qcm-feedback" id="fb-q2"></div>
+    </div>
+
+    <div class="qcm-question" id="q3">
+      <div class="qcm-q-num">QUESTION 03 / 10</div>
+      <div class="qcm-q-text">La loi du 30 juin 1838 sur les aliénés a été remplacée par quelle loi ?</div>
+      <div class="qcm-options">
+        <button class="qcm-option" onclick="answerQCM(3, 'a', this)">A. La loi du 30 juin 1975</button>
+        <button class="qcm-option" onclick="answerQCM(3, 'b', this)">B. La loi du 2 janvier 2002</button>
+        <button class="qcm-option" onclick="answerQCM(3, 'c', this)">C. La loi du 27 juin 1990</button>
+        <button class="qcm-option" onclick="answerQCM(3, 'd', this)">D. La loi du 11 février 2005</button>
+      </div>
+      <div class="qcm-feedback" id="fb-q3"></div>
+    </div>
+
+    <div class="qcm-question" id="q4">
+      <div class="qcm-q-num">QUESTION 04 / 10</div>
+      <div class="qcm-q-text">Quel est le principal apport conceptuel de la Classification Internationale du Fonctionnement (CIF) de 2001 par rapport à la CIH de 1980 ?</div>
+      <div class="qcm-options">
+        <button class="qcm-option" onclick="answerQCM(4, 'a', this)">A. La création de nouvelles catégories de déficiences</button>
+        <button class="qcm-option" onclick="answerQCM(4, 'b', this)">B. L'intégration de l'environnement comme facteur déterminant des situations de handicap</button>
+        <button class="qcm-option" onclick="answerQCM(4, 'c', this)">C. La suppression de la notion de déficience</button>
+        <button class="qcm-option" onclick="answerQCM(4, 'd', this)">D. La création d'un système de notation du handicap en pourcentage</button>
+      </div>
+      <div class="qcm-feedback" id="fb-q4"></div>
+    </div>
+
+    <div class="qcm-question" id="q5">
+      <div class="qcm-q-num">QUESTION 05 / 10</div>
+      <div class="qcm-q-text">Quelle institution est créée par la loi de 2005 pour remplacer la COTOREP et la CDES ?</div>
+      <div class="qcm-options">
+        <button class="qcm-option" onclick="answerQCM(5, 'a', this)">A. La CNSA (Caisse Nationale de Solidarité pour l'Autonomie)</button>
+        <button class="qcm-option" onclick="answerQCM(5, 'b', this)">B. Le CVS (Conseil de la Vie Sociale)</button>
+        <button class="qcm-option" onclick="answerQCM(5, 'c', this)">C. La MDPH (Maison Départementale des Personnes Handicapées)</button>
+        <button class="qcm-option" onclick="answerQCM(5, 'd', this)">D. L'AGEFIPH (Association de Gestion du Fonds pour l'Insertion)</button>
+      </div>
+      <div class="qcm-feedback" id="fb-q5"></div>
+    </div>
+
+    <div class="qcm-question" id="q6">
+      <div class="qcm-q-num">QUESTION 06 / 10</div>
+      <div class="qcm-q-text">Le concept de « psychothérapie institutionnelle » est principalement associé à quel établissement ?</div>
+      <div class="qcm-options">
+        <button class="qcm-option" onclick="answerQCM(6, 'a', this)">A. La Salpêtrière à Paris</button>
+        <button class="qcm-option" onclick="answerQCM(6, 'b', this)">B. L'hôpital de Bicêtre</button>
+        <button class="qcm-option" onclick="answerQCM(6, 'c', this)">C. L'hôpital Saint-Alban en Lozère et la Clinique de La Borde</button>
+        <button class="qcm-option" onclick="answerQCM(6, 'd', this)">D. L'Institution nationale des jeunes aveugles à Paris</button>
+      </div>
+      <div class="qcm-feedback" id="fb-q6"></div>
+    </div>
+
+    <div class="qcm-question" id="q7">
+      <div class="qcm-q-num">QUESTION 07 / 10</div>
+      <div class="qcm-q-text">Quel document individuel, créé par la loi 2002-2, formalise l'accompagnement d'une personne dans un ESMS ?</div>
+      <div class="qcm-options">
+        <button class="qcm-option" onclick="answerQCM(7, 'a', this)">A. Le livret d'accueil</button>
+        <button class="qcm-option" onclick="answerQCM(7, 'b', this)">B. Le Projet Personnalisé d'Accompagnement (PPA)</button>
+        <button class="qcm-option" onclick="answerQCM(7, 'c', this)">C. Le rapport d'activité</button>
+        <button class="qcm-option" onclick="answerQCM(7, 'd', this)">D. La notification MDPH</button>
+      </div>
+      <div class="qcm-feedback" id="fb-q7"></div>
+    </div>
+
+    <div class="qcm-question" id="q8">
+      <div class="qcm-q-num">QUESTION 08 / 10</div>
+      <div class="qcm-q-text">Qui a inventé le système d'écriture en points qui porte son nom et qui est utilisé par les personnes aveugles ?</div>
+      <div class="qcm-options">
+        <button class="qcm-option" onclick="answerQCM(8, 'a', this)">A. Valentin Haüy</button>
+        <button class="qcm-option" onclick="answerQCM(8, 'b', this)">B. L'Abbé de l'Épée</button>
+        <button class="qcm-option" onclick="answerQCM(8, 'c', this)">C. Louis Braille</button>
+        <button class="qcm-option" onclick="answerQCM(8, 'd', this)">D. Édouard Séguin</button>
+      </div>
+      <div class="qcm-feedback" id="fb-q8"></div>
+    </div>
+
+    <div class="qcm-question" id="q9">
+      <div class="qcm-q-num">QUESTION 09 / 10</div>
+      <div class="qcm-q-text">Dans quel domaine la loi du 30 juin 1975 représente-t-elle une innovation par rapport aux textes précédents ?</div>
+      <div class="qcm-options">
+        <button class="qcm-option" onclick="answerQCM(9, 'a', this)">A. Elle crée les premières structures d'hébergement spécialisé</button>
+        <button class="qcm-option" onclick="answerQCM(9, 'b', this)">B. Elle reconnaît pour la première fois les droits spécifiques des personnes handicapées et une obligation nationale de prévention et d'accompagnement</button>
+        <button class="qcm-option" onclick="answerQCM(9, 'c', this)">C. Elle instaure la gratuité totale des soins pour les personnes handicapées</button>
+        <button class="qcm-option" onclick="answerQCM(9, 'd', this)">D. Elle supprime les commissions d'orientation existantes</button>
+      </div>
+      <div class="qcm-feedback" id="fb-q9"></div>
+    </div>
+
+    <div class="qcm-question" id="q10">
+      <div class="qcm-q-num">QUESTION 10 / 10</div>
+      <div class="qcm-q-text">Quelle est la principale différence entre le handicap mental et le handicap psychique, telle que la loi de 2005 la reconnaît ?</div>
+      <div class="qcm-options">
+        <button class="qcm-option" onclick="answerQCM(10, 'a', this)">A. Le handicap mental est acquis, le handicap psychique est inné</button>
+        <button class="qcm-option" onclick="answerQCM(10, 'b', this)">B. Le handicap mental (déficience intellectuelle) se caractérise par des limitations cognitives stables, tandis que le handicap psychique résulte de troubles mentaux avec une évolution variable et des phases de rémission</button>
+        <button class="qcm-option" onclick="answerQCM(10, 'c', this)">C. Le handicap psychique est le terme médical du handicap mental</button>
+        <button class="qcm-option" onclick="answerQCM(10, 'd', this)">D. Il n'y a aucune différence, les deux termes sont synonymes</button>
+      </div>
+      <div class="qcm-feedback" id="fb-q10"></div>
+    </div>
+
+    <div class="qcm-score-area" id="qcm-score">
+      <div class="score-num" id="score-num">0/10</div>
+      <p class="score-label" id="score-msg">Résultat</p>
+      <div id="qcm-pass-msg" style="display:none; color:var(--gold); font-family:'Space Mono',monospace; font-size:12px; margin-top:16px; letter-spacing:2px;">✓ QUIZ VALIDÉ — Votre badge est débloqué !</div>
+      <div id="qcm-fail-msg" style="display:none; color:#a89878; font-size:0.9rem; font-style:italic; margin-top:16px;">Vous pouvez retenter le quiz en rechargeant la page après avoir relu les sections concernées.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== BADGE SECTION ===== -->
+<div id="badge-section">
+  <div class="section-era" style="text-align:center; margin-bottom:16px;">Certification de réalisation</div>
+  <h2 style="font-family:'Playfair Display',serif; font-size:2.2rem; margin-bottom:16px; color:var(--ink);">Votre badge de réussite</h2>
+  <div class="badge-message" id="badge-message">Complétez toutes les activités ET réussissez le quiz (≥7/10) pour débloquer votre badge personnalisé.</div>
+
+  <div id="badge-locked-area">
+    <div style="text-align:center; padding:40px;">
+      <div style="font-size:4rem; opacity:0.3; margin-bottom:16px;">🏅</div>
+      <p style="color:var(--muted); font-style:italic; font-size:0.9rem;">Badge verrouillé — Progressez dans le module pour le débloquer</p>
+      <div id="progress-summary" style="margin-top:24px; font-family:'Space Mono',monospace; font-size:12px; color:var(--muted);">
+        Activités : <span id="act-done">0</span>/18 — Quiz : <span id="quiz-done">Non complété</span>
+      </div>
+    </div>
+  </div>
+
+  <div id="badge-unlocked-area" style="display:none; text-align:center;">
+    <div style="margin-bottom:16px;">
+      <label style="font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); letter-spacing:2px;">Votre prénom (optionnel) :</label><br>
+      <input type="text" id="student-name" placeholder="Ex: Marie" style="margin-top:8px; padding:10px 16px; border:2px solid var(--border); background:white; font-family:'Source Serif 4',serif; font-size:1rem; width:250px;">
+    </div>
+    <div class="badge-canvas-container">
+      <canvas id="badgeCanvas" width="500" height="350"></canvas>
+    </div>
+    <br>
+    <button id="generate-badge-btn" onclick="generateBadge()">✦ Générer mon badge</button>
+    <button id="download-badge-btn" onclick="downloadBadge()">⬇ Télécharger</button>
+    <p style="font-size:0.85rem; color:var(--muted); margin-top:16px; font-style:italic;">Le badge inclut un identifiant unique et la date de validation.</p>
+  </div>
+</div>
+
+<!-- ===== BIBLIOGRAPHIE ===== -->
+<div class="biblio-section">
+  <div class="section" style="max-width:860px; padding-top:0;">
+    <h2>Bibliographie sélective</h2>
+    <p style="color:#a89878; font-style:italic; margin-bottom:32px; font-size:0.95rem;">Ouvrages et articles de référence pour approfondir les thèmes abordés dans ce module.</p>
+
+    <div class="biblio-item"><strong>Albrecht, G., Ravaud, J.-F., Stiker, H.-J. (2001).</strong> « L'émergence des disability studies : état des lieux et perspectives ». Sciences sociales et santé, 19(4), 43-73.</div>
+    <div class="biblio-item"><strong>Barral, C. (2007).</strong> « De la CIH à la CIF : le processus de révision ». Handicap. Revue de sciences humaines et sociales, nº 94-95.</div>
+    <div class="biblio-item"><strong>Chauvière, M. (1980).</strong> Enfance inadaptée : l'héritage de Vichy. Paris : Les Éditions Ouvrières.</div>
+    <div class="biblio-item"><strong>Chauvière, M., Plaisance, E. (dir.) (2000).</strong> L'école face aux handicaps. Éducation spéciale ou éducation intégrative ? Paris : PUF.</div>
+    <div class="biblio-item"><strong>Ebersold, S. (1997).</strong> L'invention du handicap. La normalisation de l'infirme. Paris : CTNERHI.</div>
+    <div class="biblio-item"><strong>Fougeyrollas, P., Noreau, L., Bergeron, H., Cloutier, R., Dion, S. A., St-Michel, G. (1998).</strong> « Social consequences of long term impairments and disabilities ». Disability and Rehabilitation, 20(4), 168-178.</div>
+    <div class="biblio-item"><strong>Gardou, C. (2012).</strong> La société inclusive, parlons-en ! Il n'y a pas de vie minuscule. Toulouse : Érès.</div>
+    <div class="biblio-item"><strong>Goffman, E. (1963).</strong> Stigmate. Les usages sociaux des handicaps. Paris : Éditions de Minuit (trad. française 1975).</div>
+    <div class="biblio-item"><strong>Ion, J. (2012).</strong> S'engager dans une société d'individus. Paris : Armand Colin.</div>
+    <div class="biblio-item"><strong>Minaire, P. (1992).</strong> « Disease, illness and health ». Bulletin of the WHO, 70(3), 373-379. [Sur le modèle de désavantage de situation]</div>
+    <div class="biblio-item"><strong>Oury, J., Tort, M. (dir.) (2001).</strong> La psychothérapie institutionnelle de Saint-Alban à La Borde. Paris : Champ Social.</div>
+    <div class="biblio-item"><strong>Plaisance, E. (2009).</strong> Autrement capables. École, emploi, société : pour l'inclusion des personnes handicapées. Paris : Autrement.</div>
+    <div class="biblio-item"><strong>Ravaud, J.-F. (1999).</strong> « Modèle individuel, modèle médical, modèle social : la question du sujet ». Handicap. Revue de sciences humaines et sociales, nº 81, 64-75.</div>
+    <div class="biblio-item"><strong>Stiker, H.-J. (1982).</strong> Corps infirmes et sociétés. Paris : Aubier-Montaigne. [Rééd. Paris : Dunod, 1997]</div>
+    <div class="biblio-item"><strong>Von Bueltzingsloewen, I. (2007).</strong> L'hécatombe des fous. La famine dans les hôpitaux psychiatriques français sous l'Occupation. Paris : Aubier.</div>
+    <div class="biblio-item"><strong>Zucman, É. (2007).</strong> Les droits des personnes handicapées. Paris : PUF, coll. « Que sais-je ? ».</div>
+
+    <div style="margin-top:40px; padding-top:24px; border-top:1px solid rgba(255,255,255,0.1); font-family:'Space Mono',monospace; font-size:10px; color:#665544; text-align:center; letter-spacing:2px;">
+      MODULE DÉVELOPPÉ POUR LA FORMATION INITIALE DES TRAVAILLEURS SOCIAUX<br>
+      CAMPUS SOCIAL FORMATION · IRTS PARMENTIER · © 2025
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== PROGRESS SYSTEM =====
+const TOTAL_ACTIVITIES = 18;
+let completedActivities = new Set();
+let qcmScore = 0;
+let qcmDone = false;
+
+function updateProgress() {
+  const count = completedActivities.size;
+  const pct = Math.round((count / TOTAL_ACTIVITIES) * 100);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-count').textContent = count + ' / ' + TOTAL_ACTIVITIES + ' activités';
+  document.getElementById('act-done').textContent = count;
+
+  if (count >= TOTAL_ACTIVITIES && qcmDone && qcmScore >= 7) {
+    unlockBadge();
+  }
+}
+
+function completeActivity(id) {
+  if (completedActivities.has(id)) return;
+  completedActivities.add(id);
+  const check = document.getElementById('check' + id);
+  if (check) check.classList.add('done');
+  showNotification('Activité ' + id + ' complétée !');
+  updateProgress();
+}
+
+function showNotification(msg) {
+  const notif = document.getElementById('notification');
+  document.getElementById('notif-text').textContent = msg;
+  notif.classList.add('show');
+  setTimeout(() => notif.classList.remove('show'), 2800);
+}
+
+// ===== ACT 1 =====
+function checkA1(btn, result) {
+  const container = document.getElementById('act1-options');
+  container.querySelectorAll('button').forEach(b => b.disabled = true);
+  const feedback = document.getElementById('act1-feedback');
+  feedback.style.display = 'block';
+  if (result === 'correct') {
+    btn.classList.add('correct');
+    feedback.textContent = '✓ Correct ! Platon et Aristote, dans leurs écrits politiques, envisageaient effectivement l\'élimination des enfants nés avec des malformations.';
+    completeActivity(1);
+  } else {
+    btn.classList.add('wrong');
+    feedback.style.color = 'var(--rust)';
+    feedback.textContent = '✗ Pas tout à fait. Relisez le paragraphe sur la Grèce antique — ce sont Platon et Aristote qui défendaient cette position.';
+  }
+}
+
+// ===== SORTING =====
+let dragSrcEl = null;
+function dragStart(e) { dragSrcEl = e.currentTarget; e.dataTransfer.effectAllowed = 'move'; }
+function dragItemOver(e) { e.preventDefault(); e.currentTarget.classList.add('drag-over'); }
+function drop(e, listId) {
+  e.preventDefault();
+  const list = document.getElementById(listId);
+  list.querySelectorAll('.sort-item').forEach(i => i.classList.remove('drag-over'));
+  if (dragSrcEl !== e.currentTarget) {
+    const items = [...list.querySelectorAll('.sort-item')];
+    const srcIdx = items.indexOf(dragSrcEl);
+    const dstIdx = items.indexOf(e.currentTarget);
+    if (dstIdx < srcIdx) e.currentTarget.before(dragSrcEl);
+    else e.currentTarget.after(dragSrcEl);
+  }
+}
+function dragOver(e) { e.preventDefault(); }
+
+function checkSort(listId, checkId, feedbackId) {
+  const list = document.getElementById(listId);
+  const items = [...list.querySelectorAll('.sort-item')];
+  const orders = items.map(i => parseInt(i.dataset.order));
+  const isCorrect = orders.every((v, i) => i === 0 || orders[i-1] <= v);
+  const fb = document.getElementById(feedbackId);
+  fb.style.display = 'block';
+  if (isCorrect) {
+    fb.style.color = 'var(--sage)';
+    fb.textContent = '✓ Excellent ! L\'ordre chronologique est correct.';
+    completeActivity(parseInt(checkId.replace('check','')));
+  } else {
+    fb.style.color = 'var(--rust)';
+    fb.textContent = '✗ L\'ordre n\'est pas tout à fait correct. Essayez encore !';
+  }
+}
+
+// ===== FLIP CARDS =====
+function flipCard(card, containerId, actId) {
+  card.classList.toggle('flipped');
+  const container = document.getElementById(containerId);
+  const allFlipped = [...container.querySelectorAll('.reveal-card')].every(c => c.classList.contains('flipped'));
+  if (allFlipped) completeActivity(actId);
+}
+
+// ===== MATCH =====
+let matchState = {};
+function selectMatch(btn, side, matchId) {
+  if (!matchState[matchId]) matchState[matchId] = { left: null, rightEl: null, done: [] };
+  const state = matchState[matchId];
+  if (btn.classList.contains('matched')) return;
+
+  if (side === 'left') {
+    document.querySelectorAll(`#${matchId}-left .match-item`).forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    state.left = btn.textContent.trim();
+  } else {
+    if (!state.left) return;
+    const target = btn.dataset.match;
+    if (state.left === target) {
+      btn.classList.add('matched');
+      document.querySelectorAll(`#${matchId}-left .match-item`).forEach(b => {
+        if (b.textContent.trim() === state.left) b.classList.add('matched');
+      });
+      state.done.push(state.left);
+      state.left = null;
+      const leftItems = document.querySelectorAll(`#${matchId}-left .match-item`);
+      const feedback = document.getElementById(`${matchId}-feedback`);
+      if (state.done.length === leftItems.length) {
+        feedback.textContent = '✓ Parfait ! Toutes les associations sont correctes.';
+        const num = matchId === 'match1' ? 4 : 15;
+        completeActivity(num);
+      }
+    } else {
+      btn.classList.add('error');
+      setTimeout(() => btn.classList.remove('error'), 600);
+      document.querySelectorAll(`#${matchId}-left .match-item`).forEach(b => b.classList.remove('selected'));
+      state.left = null;
+    }
+  }
+}
+
+// ===== FILL BLANKS =====
+let fillBlanks = { 'fb1-1': false, 'fb1-2': false, 'fb1-3': false };
+function checkFill(select, correct, spanId) {
+  const span = document.getElementById(spanId);
+  if (select.value === correct) {
+    span.textContent = ' ✓';
+    span.style.color = 'var(--sage)';
+    fillBlanks[spanId] = true;
+  } else if (select.value !== '') {
+    span.textContent = ' ✗';
+    span.style.color = 'var(--rust)';
+    fillBlanks[spanId] = false;
+  }
+  if (Object.values(fillBlanks).every(v => v)) completeActivity(5);
+}
+
+// ===== ACCORDION =====
+let accordionCounts = {};
+function toggleAccordion(btn, accordionId, actId) {
+  const content = btn.nextElementSibling;
+  const icon = btn.querySelector('.accordion-icon');
+  const isOpen = content.classList.contains('open');
+  content.classList.toggle('open', !isOpen);
+  icon.textContent = isOpen ? '+' : '−';
+  icon.style.transform = isOpen ? 'rotate(0)' : 'rotate(45deg)';
+
+  if (!accordionCounts[accordionId]) accordionCounts[accordionId] = new Set();
+  accordionCounts[accordionId].add(btn.textContent.split('(')[0].trim());
+
+  const accordion = document.getElementById(accordionId);
+  const totalItems = accordion.querySelectorAll('.accordion-item').length;
+  if (accordionCounts[accordionId].size >= totalItems) {
+    completeActivity(actId);
+  }
+}
+
+// ===== DRAG CHIPS =====
+let chipSrc = null;
+function dragChip(e) { chipSrc = e.currentTarget; e.dataTransfer.effectAllowed = 'move'; }
+function allowDrop(e) { e.preventDefault(); e.currentTarget.classList.add('over'); }
+function dropChip(e, zone, checkId) {
+  e.preventDefault();
+  e.currentTarget.classList.remove('over');
+  if (!chipSrc) return;
+  const target = chipSrc.dataset.target;
+  const fb = document.getElementById('drag-feedback');
+  if (target === zone) {
+    e.currentTarget.appendChild(chipSrc);
+    chipSrc.style.opacity = '1';
+    const src = document.getElementById('drag-source');
+    const total = document.querySelectorAll('#drag-source .drag-chip, #drop-medical .drag-chip, #drop-social .drag-chip').length;
+    const placed = document.querySelectorAll('#drop-medical .drag-chip, #drop-social .drag-chip').length;
+    if (placed >= 6) {
+      fb.style.display = 'block';
+      fb.textContent = '✓ Excellent ! Vous avez bien distingué les deux modèles du handicap.';
+      completeActivity(11);
+    }
+  } else {
+    chipSrc.classList.add('error');
+    setTimeout(() => { if(chipSrc) chipSrc.classList.remove('error'); }, 600);
+    fb.style.display = 'block';
+    fb.style.color = 'var(--rust)';
+    fb.textContent = '✗ Cet élément n\'appartient pas à ce modèle. Réessayez.';
+    setTimeout(() => { fb.style.display = 'none'; fb.style.color = 'var(--sage)'; }, 2000);
+  }
+  chipSrc = null;
+}
+
+// ===== SLIDER =====
+function updateSlider(sliderId, valId) {
+  const val = parseInt(document.getElementById(sliderId).value);
+  const el = document.getElementById(valId);
+  if (val < 30) el.textContent = 'Limite importante';
+  else if (val < 50) el.textContent = 'Plutôt une limite';
+  else if (val === 50) el.textContent = 'Position neutre';
+  else if (val < 70) el.textContent = 'Plutôt une avancée';
+  else el.textContent = 'Avancée majeure';
+}
+
+// ===== REFLECTION =====
+function checkReflection(textareaId, minWords, checkId, countId) {
+  const text = document.getElementById(textareaId).value;
+  const words = text.trim().split(/\s+/).filter(w => w.length > 0).length;
+  document.getElementById(countId).textContent = words;
+  if (words >= minWords) completeActivity(parseInt(checkId.replace('check','')));
+}
+
+// ===== HOTSPOT =====
+const hotspotData = {
+  'IME': 'Institut Médico-Éducatif : accueille les enfants et adolescents (6-20 ans) en situation de handicap intellectuel et/ou psychique. Propose une prise en charge éducative, pédagogique et thérapeutique.',
+  'ESAT': 'Établissement et Service d\'Aide par le Travail : propose une activité professionnelle adaptée aux adultes handicapés dont la capacité de travail est inférieure à 1/3 de la norme.',
+  'ITEP': 'Institut Thérapeutique Éducatif et Pédagogique : accueille les jeunes présentant des difficultés psychologiques perturbant les apprentissages et la socialisation, sans déficience intellectuelle.',
+  'SESSAD': 'Service d\'Éducation Spécialisée et de Soins à Domicile : intervient en milieu ordinaire (école, domicile) pour soutenir l\'intégration des enfants handicapés. Accompagnement ambulatoire.',
+  'FAM': 'Foyer d\'Accueil Médicalisé : héberge des adultes handicapés nécessitant des soins médicaux constants. Financement double : Assurance Maladie (soins) + Conseil Départemental (hébergement).',
+  'MAS': 'Maison d\'Accueil Spécialisée : accueille les personnes polyhandicapées les plus dépendantes. Financement intégralement par l\'Assurance Maladie.'
+};
+let hotspotClicked = new Set();
+function showHotspot(btn, key, checkId) {
+  document.querySelectorAll('.hotspot-btn').forEach(b => b.classList.remove('clicked'));
+  btn.classList.add('clicked');
+  const result = document.getElementById('hotspot-result');
+  result.innerHTML = '<strong>' + key + '</strong> — ' + hotspotData[key];
+  result.classList.add('show');
+  hotspotClicked.add(key);
+  if (hotspotClicked.size >= 6) completeActivity(9);
+}
+
+// ===== CONCEPT CLOUD =====
+let cloudCounts = {};
+function tagConcept(el, cloudId, minTags, checkId) {
+  el.classList.toggle('tagged');
+  if (!cloudCounts[cloudId]) cloudCounts[cloudId] = 0;
+  cloudCounts[cloudId] += el.classList.contains('tagged') ? 1 : -1;
+  if (cloudCounts[cloudId] >= minTags) completeActivity(8);
+}
+
+// ===== VF =====
+let vfAnswered = { 'vf1': false, 'vf2': false, 'vf3': false };
+function checkVF(btn, isCorrect, feedbackId) {
+  const parent = btn.closest('.vf-item');
+  parent.querySelectorAll('button').forEach(b => b.disabled = true);
+  const fb = document.getElementById(feedbackId);
+  fb.style.display = 'block';
+  if (isCorrect) { btn.classList.add('correct'); fb.style.color = 'var(--sage)'; }
+  else { btn.classList.add('wrong'); fb.style.color = 'var(--rust)'; }
+  vfAnswered[feedbackId] = true;
+  if (Object.values(vfAnswered).every(v => v)) completeActivity(13);
+}
+
+let vf2Answered = { 'vf2-1': false, 'vf2-2': false, 'vf2-3': false };
+function checkVF2(btn, isCorrect, feedbackId) {
+  const parent = btn.closest('div[style]');
+  parent.querySelectorAll('button').forEach(b => b.disabled = true);
+  const fb = document.getElementById(feedbackId);
+  fb.style.display = 'block';
+  if (isCorrect) { btn.classList.add('correct'); fb.style.color = 'var(--sage)'; }
+  else { btn.classList.add('wrong'); fb.style.color = 'var(--rust)'; }
+  vf2Answered[feedbackId] = true;
+  if (Object.values(vf2Answered).every(v => v)) completeActivity(17);
+}
+
+// ===== QCM FINAL =====
+const qcmAnswers = { 1:'b', 2:'b', 3:'c', 4:'b', 5:'c', 6:'c', 7:'b', 8:'c', 9:'b', 10:'b' };
+const qcmFeedbacks = {
+  1: { b: '✓ Correct ! Cette définition, issue de l\'art. 2 de la loi du 11 février 2005, met l\'accent sur la participation à la vie en société et le rôle de l\'environnement.', wrong: '✗ Incorrect. La définition de 2005 intègre la notion de restriction de participation en société et l\'interaction avec l\'environnement.' },
+  2: { b: '✓ Correct ! Philippe Pinel, avec Jean-Baptiste Pussin, fait retirer les chaînes aux aliénés à Bicêtre en 1793 puis à la Salpêtrière.', wrong: '✗ Incorrect. C\'est Philippe Pinel, assisté de Jean-Baptiste Pussin, qui accomplit cette réforme fondatrice.' },
+  3: { c: '✓ Correct ! La loi du 27 juin 1990 relative aux droits et à la protection des personnes hospitalisées en raison de troubles mentaux remplace la loi Esquirol de 1838.', wrong: '✗ Incorrect. C\'est la loi du 27 juin 1990 qui remplace enfin la loi de 1838 sur les aliénés, après plus de 150 ans.' },
+  4: { b: '✓ Correct ! La CIF adopte une approche biopsychosociale qui intègre les facteurs environnementaux comme barrières ou facilitateurs de la participation sociale.', wrong: '✗ Incorrect. L\'apport majeur de la CIF est l\'intégration des facteurs environnementaux, reconnaissant que l\'environnement peut créer ou réduire les situations de handicap.' },
+  5: { c: '✓ Correct ! La MDPH, créée par la loi 2005, est le guichet unique qui centralise l\'évaluation des besoins et l\'attribution des droits, remplaçant COTOREP (adultes) et CDES (enfants).', wrong: '✗ Incorrect. C\'est bien la MDPH (Maison Départementale des Personnes Handicapées) qui remplace les anciennes commissions.' },
+  6: { c: '✓ Correct ! L\'hôpital Saint-Alban (Lozère) avec François Tosquelles et Lucien Bonnafé, puis La Borde avec Jean Oury sont les hauts lieux de la psychothérapie institutionnelle.', wrong: '✗ Incorrect. La psychothérapie institutionnelle est associée à l\'hôpital Saint-Alban en Lozère et à la Clinique de La Borde (Jean Oury, Félix Guattari).' },
+  7: { b: '✓ Correct ! Le Projet Personnalisé d\'Accompagnement (PPA) doit être co-construit avec la personne et formalisé dans le cadre d\'un contrat de séjour ou d\'un DIPC.', wrong: '✗ Incorrect. Le document clé de la loi 2002-2 est le Projet Personnalisé d\'Accompagnement (PPA), co-construit avec la personne accueillie.' },
+  8: { c: '✓ Correct ! Louis Braille (1809-1852), lui-même aveugle depuis l\'enfance, invente à 15 ans son système d\'écriture en points, officialisé en 1854.', wrong: '✗ Incorrect. C\'est Louis Braille qui invente le système d\'écriture en points qui porte son nom. Valentin Haüy a fondé la première école pour aveugles.' },
+  9: { b: '✓ Correct ! La loi de 1975 est la première à reconnaître explicitement les droits spécifiques des personnes handicapées et à affirmer une obligation nationale, au-delà de la simple assistance.', wrong: '✗ Incorrect. L\'innovation majeure de 1975 est la reconnaissance d\'une obligation nationale et de droits spécifiques aux personnes handicapées.' },
+  10: { b: '✓ Correct ! Le handicap mental (DI) se caractérise par des limitations cognitives permanentes, tandis que le handicap psychique (schizophrénie, troubles bipolaires...) évolue par phases avec des périodes de rémission.', wrong: '✗ Incorrect. La différence essentielle est que le handicap psychique résulte de troubles mentaux avec une évolution variable, tandis que le handicap mental (déficience intellectuelle) implique des limitations cognitives plus stables.' }
+};
+
+let qcmAnswered = {};
+function answerQCM(qNum, choice, btn) {
+  if (qcmAnswered[qNum]) return;
+  qcmAnswered[qNum] = choice;
+
+  const qEl = document.getElementById('q' + qNum);
+  qEl.querySelectorAll('.qcm-option').forEach(b => b.disabled = true);
+
+  const correct = qcmAnswers[qNum];
+  const fb = document.getElementById('fb-q' + qNum);
+  fb.classList.add('show');
+
+  if (choice === correct) {
+    btn.classList.add('correct-opt');
+    fb.classList.add('correct');
+    fb.textContent = qcmFeedbacks[qNum][choice];
+    qcmScore++;
+  } else {
+    btn.classList.add('wrong-opt');
+    fb.classList.add('wrong');
+    fb.textContent = qcmFeedbacks[qNum]['wrong'];
+    qEl.querySelectorAll('.qcm-option').forEach(b => {
+      if (b.textContent.startsWith(correct.toUpperCase() + '.')) b.classList.add('correct-opt');
+    });
+  }
+
+  if (Object.keys(qcmAnswered).length === 10) {
+    showQCMResult();
+  }
+}
+
+function showQCMResult() {
+  qcmDone = true;
+  completeActivity(19); // pseudo-activity for quiz
+  const scoreEl = document.getElementById('qcm-score');
+  scoreEl.classList.add('show');
+  document.getElementById('score-num').textContent = qcmScore + '/10';
+  const msgs = [
+    'Continuez à réviser !', 'Quelques lacunes à combler.', 'Bien ! Relisez les sections manquées.',
+    'Très bien !', 'Excellent score !', 'Parfait !'
+  ];
+  const msgIdx = Math.min(Math.floor(qcmScore / 2), 5);
+  document.getElementById('score-msg').textContent = msgs[msgIdx];
+  document.getElementById('quiz-done').textContent = qcmScore + '/10';
+
+  if (qcmScore >= 7) {
+    document.getElementById('qcm-pass-msg').style.display = 'block';
+    if (completedActivities.size >= TOTAL_ACTIVITIES) unlockBadge();
+    else { unlockBadge(); } // unlock anyway if quiz passed
+  } else {
+    document.getElementById('qcm-fail-msg').style.display = 'block';
+  }
+  updateProgress();
+}
+
+function unlockBadge() {
+  document.getElementById('badge-message').textContent = '🎉 Félicitations ! Vous avez validé ce module. Générez votre badge de réalisation.';
+  document.getElementById('badge-locked-area').style.display = 'none';
+  document.getElementById('badge-unlocked-area').style.display = 'block';
+}
+
+// ===== BADGE GENERATION =====
+function generateBadge() {
+  const canvas = document.getElementById('badgeCanvas');
+  const ctx = canvas.getContext('2d');
+  const name = document.getElementById('student-name').value.trim() || 'Étudiant·e';
+  const date = new Date().toLocaleDateString('fr-FR', { day:'2-digit', month:'long', year:'numeric' });
+  const uid = 'HS-' + Date.now().toString(36).toUpperCase().substring(0,8);
+
+  // Background
+  ctx.fillStyle = '#1a1208';
+  ctx.fillRect(0, 0, 500, 350);
+
+  // Decorative border
+  ctx.strokeStyle = '#c9952a';
+  ctx.lineWidth = 3;
+  ctx.strokeRect(12, 12, 476, 326);
+  ctx.lineWidth = 1;
+  ctx.strokeStyle = 'rgba(201,149,42,0.3)';
+  ctx.strokeRect(20, 20, 460, 310);
+
+  // Corner ornaments
+  const corners = [[20,20],[480,20],[20,330],[480,330]];
+  corners.forEach(([x, y]) => {
+    ctx.fillStyle = '#c9952a';
+    ctx.fillRect(x-4, y-4, 8, 8);
+  });
+
+  // Title
+  ctx.fillStyle = '#c9952a';
+  ctx.font = 'bold 11px monospace';
+  ctx.textAlign = 'center';
+  ctx.fillText('CAMPUS SOCIAL FORMATION · CERTIFICAT DE RÉALISATION', 250, 50);
+
+  // Medal emoji area
+  ctx.font = '48px serif';
+  ctx.fillText('🏅', 250, 115);
+
+  // Main title
+  ctx.fillStyle = '#f5f0e8';
+  ctx.font = 'bold 18px Georgia, serif';
+  ctx.fillText('Histoire du Handicap', 250, 150);
+  ctx.font = 'italic 15px Georgia, serif';
+  ctx.fillStyle = '#c9952a';
+  ctx.fillText('dans le Champ Médico-Social', 250, 172);
+
+  // Separator
+  ctx.fillStyle = 'rgba(201,149,42,0.4)';
+  ctx.fillRect(100, 185, 300, 1);
+
+  // Student name
+  ctx.fillStyle = '#f5f0e8';
+  ctx.font = '22px Georgia, serif';
+  ctx.fillText(name, 250, 218);
+
+  // Score
+  ctx.font = '13px monospace';
+  ctx.fillStyle = '#2a6b7c';
+  ctx.fillText('Score QCM : ' + qcmScore + '/10  ·  Activités : ' + Math.min(completedActivities.size, TOTAL_ACTIVITIES) + '/' + TOTAL_ACTIVITIES, 250, 248);
+
+  // Date and UID
+  ctx.fillStyle = '#6b5c44';
+  ctx.font = '11px monospace';
+  ctx.fillText('Validé le ' + date, 250, 278);
+  ctx.fillStyle = 'rgba(201,149,42,0.6)';
+  ctx.font = 'bold 10px monospace';
+  ctx.fillText('ID : ' + uid, 250, 298);
+
+  // Bottom
+  ctx.fillStyle = '#c9952a';
+  ctx.font = '9px monospace';
+  ctx.fillText('IRTS PARMENTIER · Module Historique Médico-Social', 250, 325);
+
+  document.getElementById('download-badge-btn').style.display = 'inline-block';
+  showNotification('Badge généré ! Téléchargez-le.');
+}
+
+function downloadBadge() {
+  const canvas = document.getElementById('badgeCanvas');
+  const link = document.createElement('a');
+  link.download = 'badge-histoire-handicap.png';
+  link.href = canvas.toDataURL();
+  link.click();
+}
+
+// ===== QCM VISIBILITY OBSERVER =====
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) e.target.classList.add('visible');
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.qcm-question').forEach(q => observer.observe(q));
+
+// ===== INIT =====
+document.getElementById('total-points').textContent = TOTAL_ACTIVITIES;
+updateProgress();
+</script>
+</body>
+</html>
