@@ -996,6 +996,38 @@
     .hero-stats { gap: 24px; }
     .hotspot-grid { grid-template-columns: 1fr 1fr; }
   }
+  .production-card {
+    background: var(--aged);
+    border-left: 4px solid var(--gold);
+    border-radius: 6px;
+    padding: 20px 24px;
+    margin-bottom: 20px;
+  }
+  .production-card-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .production-text {
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--ink);
+    margin: 0 0 10px 0;
+    padding: 0;
+    border: none;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  .production-wordcount {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    text-align: right;
+  }
 </style>
 </head>
 <body>
@@ -1289,10 +1321,10 @@
   <div class="interaction-zone">
     <div class="interaction-label">Activité 6 · Réflexion personnelle</div>
     <h4>En quoi les guerres mondiales ont-elles transformé le regard social sur le handicap ?</h4>
-    <p>Rédigez une réponse d'au moins 80 mots. <span class="check-indicator" id="check6">✓ COMPLÉTÉ</span></p>
+    <p>Rédigez une réponse d'au moins 50 mots. <span class="check-indicator" id="check6">✓ COMPLÉTÉ</span></p>
     <div class="reflection-area">
-      <textarea id="reflect1" placeholder="Réfléchissez à la notion de 'dette nationale', au regard social sur les blessés de guerre, aux différences avec le regard sur les personnes handicapées 'de naissance'..." oninput="checkReflection('reflect1', 80, 'check6', 'rc1')"></textarea>
-      <div class="char-counter"><span id="rc1">0</span> mots — minimum requis : 80</div>
+      <textarea id="reflect1" placeholder="Réfléchissez à la notion de 'dette nationale', au regard social sur les blessés de guerre, aux différences avec le regard sur les personnes handicapées 'de naissance'..." oninput="checkReflection('reflect1', 50, 'check6', 'rc1')"></textarea>
+      <div class="char-counter"><span id="rc1">0</span> mots — minimum requis : 50</div>
     </div>
   </div>
 
@@ -1488,8 +1520,8 @@
       <div class="slider-value" id="slider-val-75">Position neutre</div>
     </div>
     <div class="reflection-area" style="margin-top:16px;">
-      <textarea id="reflect-loi75" placeholder="Justifiez votre positionnement en vous appuyant sur les éléments lus..." oninput="checkReflection('reflect-loi75', 60, 'check10', 'rc2')"></textarea>
-      <div class="char-counter"><span id="rc2">0</span> mots — minimum : 60</div>
+      <textarea id="reflect-loi75" placeholder="Justifiez votre positionnement en vous appuyant sur les éléments lus..." oninput="checkReflection('reflect-loi75', 50, 'check10', 'rc2')"></textarea>
+      <div class="char-counter"><span id="rc2">0</span> mots — minimum : 50</div>
     </div>
     <span class="check-indicator" id="check10">✓ COMPLÉTÉ</span>
   </div>
@@ -1819,8 +1851,8 @@
     <h4>Exercice de mise en situation</h4>
     <p>M. Thomas, 42 ans, souffre de schizophrénie stabilisée et présente également une déficience motrice suite à un accident de la route. Il vit seul et ses hospitalisations psychiatriques répétées rendent son accompagnement médico-social complexe. Quels acteurs seraient impliqués dans son parcours, et quelles seraient les tensions potentielles entre eux ?</p>
     <div class="reflection-area">
-      <textarea id="reflect-ms1" placeholder="Identifiez les acteurs du secteur sanitaire, du secteur médico-social et les modalités de coordination possibles..." oninput="checkReflection('reflect-ms1', 80, 'check16', 'rc3')"></textarea>
-      <div class="char-counter"><span id="rc3">0</span> mots — minimum : 80</div>
+      <textarea id="reflect-ms1" placeholder="Identifiez les acteurs du secteur sanitaire, du secteur médico-social et les modalités de coordination possibles..." oninput="checkReflection('reflect-ms1', 50, 'check16', 'rc3')"></textarea>
+      <div class="char-counter"><span id="rc3">0</span> mots — minimum : 50</div>
     </div>
     <span class="check-indicator" id="check16">✓ COMPLÉTÉ</span>
   </div>
@@ -1896,10 +1928,10 @@
   <div class="interaction-zone">
     <div class="interaction-label">Activité 18 · Synthèse personnelle</div>
     <h4>Évolution du regard sur le handicap : retracez les grandes transformations</h4>
-    <p>En vous appuyant sur l'ensemble de ce que vous avez lu, rédigez une synthèse des évolutions du regard social sur le handicap depuis l'Antiquité. Identifiez les trois ruptures qui vous semblent les plus significatives. (minimum 120 mots) <span class="check-indicator" id="check18">✓ COMPLÉTÉ</span></p>
+    <p>En vous appuyant sur l'ensemble de ce que vous avez lu, rédigez une synthèse des évolutions du regard social sur le handicap depuis l'Antiquité. Identifiez les trois ruptures qui vous semblent les plus significatives. (minimum 50 mots) <span class="check-indicator" id="check18">✓ COMPLÉTÉ</span></p>
     <div class="reflection-area">
-      <textarea id="reflect-synth" style="min-height:180px;" placeholder="Antiquité → Charité chrétienne → Grand renfermement → Médicalisation → Droits et citoyenneté... Quelles sont les ruptures les plus profondes ?" oninput="checkReflection('reflect-synth', 120, 'check18', 'rc4')"></textarea>
-      <div class="char-counter"><span id="rc4">0</span> mots — minimum : 120</div>
+      <textarea id="reflect-synth" style="min-height:180px;" placeholder="Antiquité → Charité chrétienne → Grand renfermement → Médicalisation → Droits et citoyenneté... Quelles sont les ruptures les plus profondes ?" oninput="checkReflection('reflect-synth', 50, 'check18', 'rc4')"></textarea>
+      <div class="char-counter"><span id="rc4">0</span> mots — minimum : 50</div>
     </div>
   </div>
 
@@ -2063,12 +2095,41 @@
       <input type="text" id="student-name" placeholder="Ex: Marie" style="margin-top:8px; padding:10px 16px; border:2px solid var(--border); background:white; font-family:'Source Serif 4',serif; font-size:1rem; width:250px;">
     </div>
     <div class="badge-canvas-container">
-      <canvas id="badgeCanvas" width="500" height="350"></canvas>
+      <canvas id="badgeCanvas" width="500" height="420"></canvas>
     </div>
     <br>
     <button id="generate-badge-btn" onclick="generateBadge()">✦ Générer mon badge</button>
     <button id="download-badge-btn" onclick="downloadBadge()">⬇ Télécharger</button>
     <p style="font-size:0.85rem; color:var(--muted); margin-top:16px; font-style:italic;">Le badge inclut un identifiant unique et la date de validation.</p>
+
+    <!-- Productions écrites -->
+    <div id="productions-display" style="margin-top:40px; text-align:left;">
+      <h3 style="font-family:'Playfair Display',serif; font-size:1.4rem; color:var(--ink); border-bottom:2px solid var(--gold); padding-bottom:8px; margin-bottom:24px;">Vos productions écrites</h3>
+
+      <div class="production-card">
+        <div class="production-card-label">Activité 6 · Guerres mondiales &amp; regard social</div>
+        <blockquote id="display-reflect1" class="production-text">—</blockquote>
+        <div class="production-wordcount">Mots : <span id="wc-reflect1">0</span></div>
+      </div>
+
+      <div class="production-card">
+        <div class="production-card-label">Activité 10 · Loi 1975 — positionnement analytique</div>
+        <blockquote id="display-reflect-loi75" class="production-text">—</blockquote>
+        <div class="production-wordcount">Mots : <span id="wc-reflect-loi75">0</span></div>
+      </div>
+
+      <div class="production-card">
+        <div class="production-card-label">Activité 16 · Acteurs médico-sociaux — mise en situation</div>
+        <blockquote id="display-reflect-ms1" class="production-text">—</blockquote>
+        <div class="production-wordcount">Mots : <span id="wc-reflect-ms1">0</span></div>
+      </div>
+
+      <div class="production-card">
+        <div class="production-card-label">Activité 18 · Synthèse historique — évolution du regard</div>
+        <blockquote id="display-reflect-synth" class="production-text">—</blockquote>
+        <div class="production-wordcount">Mots : <span id="wc-reflect-synth">0</span></div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -2449,6 +2510,23 @@ function unlockBadge() {
   document.getElementById('badge-message').textContent = '🎉 Félicitations ! Vous avez validé ce module. Générez votre badge de réalisation.';
   document.getElementById('badge-locked-area').style.display = 'none';
   document.getElementById('badge-unlocked-area').style.display = 'block';
+  populateProductions();
+}
+
+function populateProductions() {
+  const map = [
+    { src: 'reflect1',       display: 'display-reflect1',       wc: 'wc-reflect1' },
+    { src: 'reflect-loi75',  display: 'display-reflect-loi75',  wc: 'wc-reflect-loi75' },
+    { src: 'reflect-ms1',    display: 'display-reflect-ms1',    wc: 'wc-reflect-ms1' },
+    { src: 'reflect-synth',  display: 'display-reflect-synth',  wc: 'wc-reflect-synth' }
+  ];
+  map.forEach(({ src, display, wc }) => {
+    const el = document.getElementById(src);
+    const text = el ? el.value.trim() : '';
+    const words = text ? text.split(/\s+/).filter(w => w.length > 0).length : 0;
+    document.getElementById(display).textContent = text || '(aucun texte saisi)';
+    document.getElementById(wc).textContent = words;
+  });
 }
 
 // ===== BADGE GENERATION =====
@@ -2461,18 +2539,18 @@ function generateBadge() {
 
   // Background
   ctx.fillStyle = '#1a1208';
-  ctx.fillRect(0, 0, 500, 350);
+  ctx.fillRect(0, 0, 500, 420);
 
   // Decorative border
   ctx.strokeStyle = '#c9952a';
   ctx.lineWidth = 3;
-  ctx.strokeRect(12, 12, 476, 326);
+  ctx.strokeRect(12, 12, 476, 396);
   ctx.lineWidth = 1;
   ctx.strokeStyle = 'rgba(201,149,42,0.3)';
-  ctx.strokeRect(20, 20, 460, 310);
+  ctx.strokeRect(20, 20, 460, 380);
 
   // Corner ornaments
-  const corners = [[20,20],[480,20],[20,330],[480,330]];
+  const corners = [[20,20],[480,20],[20,400],[480,400]];
   corners.forEach(([x, y]) => {
     ctx.fillStyle = '#c9952a';
     ctx.fillRect(x-4, y-4, 8, 8);
@@ -2510,18 +2588,47 @@ function generateBadge() {
   ctx.fillStyle = '#2a6b7c';
   ctx.fillText('Score QCM : ' + qcmScore + '/10  ·  Activités : ' + Math.min(completedActivities.size, TOTAL_ACTIVITIES) + '/' + TOTAL_ACTIVITIES, 250, 248);
 
+  // Productions écrites section
+  ctx.fillStyle = 'rgba(201,149,42,0.4)';
+  ctx.fillRect(60, 260, 380, 1);
+
+  ctx.fillStyle = '#c9952a';
+  ctx.font = 'bold 10px monospace';
+  ctx.fillText('PRODUCTIONS ÉCRITES RÉALISÉES', 250, 276);
+
+  const productions = [
+    { label: 'Guerres mondiales & regard social', id: 'reflect1' },
+    { label: 'Loi 1975 — positionnement analytique', id: 'reflect-loi75' },
+    { label: 'Acteurs médico-sociaux — mise en situation', id: 'reflect-ms1' },
+    { label: 'Synthèse historique — évolution du regard', id: 'reflect-synth' }
+  ];
+  const prodYStart = 292;
+  productions.forEach((p, i) => {
+    const el = document.getElementById(p.id);
+    const words = el ? el.value.trim().split(/\s+/).filter(w => w.length > 0).length : 0;
+    ctx.fillStyle = words >= 50 ? '#6b9e8b' : '#8b4513';
+    ctx.font = '10px monospace';
+    ctx.textAlign = 'left';
+    ctx.fillText((words >= 50 ? '✔' : '○') + ' ' + p.label + ' (' + words + ' mots)', 60, prodYStart + i * 16);
+    ctx.textAlign = 'center';
+  });
+
+  // Separator before date
+  ctx.fillStyle = 'rgba(201,149,42,0.4)';
+  ctx.fillRect(60, 360, 380, 1);
+
   // Date and UID
   ctx.fillStyle = '#6b5c44';
   ctx.font = '11px monospace';
-  ctx.fillText('Validé le ' + date, 250, 278);
+  ctx.fillText('Validé le ' + date, 250, 374);
   ctx.fillStyle = 'rgba(201,149,42,0.6)';
   ctx.font = 'bold 10px monospace';
-  ctx.fillText('ID : ' + uid, 250, 298);
+  ctx.fillText('ID : ' + uid, 250, 392);
 
   // Bottom
   ctx.fillStyle = '#c9952a';
   ctx.font = '9px monospace';
-  ctx.fillText('IRTS PARMENTIER · Module Historique Médico-Social', 250, 325);
+  ctx.fillText('IRTS PARMENTIER · Module Historique Médico-Social', 250, 410);
 
   document.getElementById('download-badge-btn').style.display = 'inline-block';
   showNotification('Badge généré ! Téléchargez-le.');
