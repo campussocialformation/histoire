@@ -578,7 +578,8 @@
     user-select: none;
     transition: opacity 0.2s;
   }
-  .drag-chip:active { cursor: grabbing; opacity: 0.7; }
+  .drag-chip { cursor: pointer; }
+  .drag-chip:active { opacity: 0.8; }
   .drag-label { font-size: 0.85rem; color: var(--muted); margin-bottom: 4px; font-style: italic; }
 
   /* SLIDER */
@@ -656,6 +657,28 @@
     list-style: none;
     margin: 16px 0;
   }
+  .sort-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    flex-shrink: 0;
+  }
+  .sort-btn {
+    background: var(--gold);
+    border: none;
+    color: var(--ink);
+    width: 30px;
+    height: 26px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .sort-btn:hover { background: var(--rust); color: white; }
   .sort-item {
     background: var(--aged);
     border: 1px solid var(--border);
@@ -667,9 +690,11 @@
     gap: 12px;
     font-size: 0.9rem;
   }
-  .sort-item:active { cursor: grabbing; }
-  .sort-handle { color: var(--gold); font-size: 1.2rem; }
-  .sort-item.drag-over { border-top: 3px solid var(--teal); }
+  .drag-chip.selected {
+    outline: 3px solid var(--teal);
+    box-shadow: 0 0 10px rgba(42,107,124,0.5);
+    transform: scale(1.06);
+  }
 
   /* HOTSPOT */
   .hotspot-diagram {
@@ -1098,20 +1123,36 @@
   <!-- ACTIVITÉ 2 : Classement chronologique -->
   <div class="interaction-zone">
     <div class="interaction-label">Activité 2 · Chronologie à ordonner</div>
-    <h4>Remettez ces éléments dans l'ordre chronologique (glissez-déposez)</h4>
-    <p>Du plus ancien au plus récent</p>
-    <ul class="sort-list" id="sort1" ondragover="dragOver(event)">
-      <li class="sort-item" draggable="true" data-order="3" ondragstart="dragStart(event)" ondrop="drop(event, 'sort1')" ondragover="dragItemOver(event)">
-        <span class="sort-handle">⠿</span> Confréries de pénitents organisent la charité en Europe
+    <h4>Remettez ces éléments dans l'ordre chronologique</h4>
+    <p>Du plus ancien au plus récent — utilisez les boutons ↑ ↓ pour déplacer chaque élément</p>
+    <ul class="sort-list" id="sort1">
+      <li class="sort-item" data-order="3">
+        <div class="sort-controls">
+          <button class="sort-btn" onclick="moveItem('sort1', this, -1)" aria-label="Monter">↑</button>
+          <button class="sort-btn" onclick="moveItem('sort1', this, 1)" aria-label="Descendre">↓</button>
+        </div>
+        <span>Confréries de pénitents organisent la charité en Europe</span>
       </li>
-      <li class="sort-item" draggable="true" data-order="1" ondragstart="dragStart(event)" ondrop="drop(event, 'sort1')" ondragover="dragItemOver(event)">
-        <span class="sort-handle">⠿</span> Tablette cunéiforme mésopotamienne sur le handicap
+      <li class="sort-item" data-order="1">
+        <div class="sort-controls">
+          <button class="sort-btn" onclick="moveItem('sort1', this, -1)" aria-label="Monter">↑</button>
+          <button class="sort-btn" onclick="moveItem('sort1', this, 1)" aria-label="Descendre">↓</button>
+        </div>
+        <span>Tablette cunéiforme mésopotamienne sur le handicap</span>
       </li>
-      <li class="sort-item" draggable="true" data-order="4" ondragstart="dragStart(event)" ondrop="drop(event, 'sort1')" ondragover="dragItemOver(event)">
-        <span class="sort-handle">⠿</span> Louis XIV crée un système d'hôpitaux publics
+      <li class="sort-item" data-order="4">
+        <div class="sort-controls">
+          <button class="sort-btn" onclick="moveItem('sort1', this, -1)" aria-label="Monter">↑</button>
+          <button class="sort-btn" onclick="moveItem('sort1', this, 1)" aria-label="Descendre">↓</button>
+        </div>
+        <span>Louis XIV crée un système d'hôpitaux publics</span>
       </li>
-      <li class="sort-item" draggable="true" data-order="2" ondragstart="dragStart(event)" ondrop="drop(event, 'sort1')" ondragover="dragItemOver(event)">
-        <span class="sort-handle">⠿</span> Jésus guérit les malades — changement de paradigme chrétien
+      <li class="sort-item" data-order="2">
+        <div class="sort-controls">
+          <button class="sort-btn" onclick="moveItem('sort1', this, -1)" aria-label="Monter">↑</button>
+          <button class="sort-btn" onclick="moveItem('sort1', this, 1)" aria-label="Descendre">↓</button>
+        </div>
+        <span>Jésus guérit les malades — changement de paradigme chrétien</span>
       </li>
     </ul>
     <button class="btn btn-primary" onclick="checkSort('sort1', 'check2', 'sort1-feedback')">Vérifier l'ordre</button>
@@ -1567,25 +1608,25 @@
   <div class="interaction-zone">
     <div class="interaction-label">Activité 11 · Modèles du handicap</div>
     <h4>Classez ces éléments dans le bon modèle</h4>
-    <p>Glissez chaque élément vers le modèle correspondant <span class="check-indicator" id="check11">✓ COMPLÉTÉ</span></p>
+    <p>Sélectionnez un élément, puis touchez/cliquez la zone où il appartient <span class="check-indicator" id="check11">✓ COMPLÉTÉ</span></p>
     <div style="margin-bottom:16px;">
       <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:8px;" id="drag-source">
-        <div class="drag-chip" draggable="true" data-target="medical" ondragstart="dragChip(event)">La personne est le problème</div>
-        <div class="drag-chip" draggable="true" data-target="social" ondragstart="dragChip(event)">L'environnement crée le handicap</div>
-        <div class="drag-chip" draggable="true" data-target="medical" ondragstart="dragChip(event)">Traitement médical prioritaire</div>
-        <div class="drag-chip" draggable="true" data-target="social" ondragstart="dragChip(event)">Accessibilité universelle</div>
-        <div class="drag-chip" draggable="true" data-target="medical" ondragstart="dragChip(event)">Classification des déficiences</div>
-        <div class="drag-chip" draggable="true" data-target="social" ondragstart="dragChip(event)">Droits et citoyenneté</div>
+        <div class="drag-chip" data-target="medical" onclick="selectChip(this)">La personne est le problème</div>
+        <div class="drag-chip" data-target="social" onclick="selectChip(this)">L'environnement crée le handicap</div>
+        <div class="drag-chip" data-target="medical" onclick="selectChip(this)">Traitement médical prioritaire</div>
+        <div class="drag-chip" data-target="social" onclick="selectChip(this)">Accessibilité universelle</div>
+        <div class="drag-chip" data-target="medical" onclick="selectChip(this)">Classification des déficiences</div>
+        <div class="drag-chip" data-target="social" onclick="selectChip(this)">Droits et citoyenneté</div>
       </div>
     </div>
     <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
       <div>
         <div class="drag-label">Modèle médical/individuel</div>
-        <div class="drag-zone" id="drop-medical" ondragover="allowDrop(event)" ondrop="dropChip(event, 'medical', 'check11')"></div>
+        <div class="drag-zone" id="drop-medical" onclick="placeChip(this, 'medical')"></div>
       </div>
       <div>
         <div class="drag-label">Modèle social/environnemental</div>
-        <div class="drag-zone" id="drop-social" ondragover="allowDrop(event)" ondrop="dropChip(event, 'social', 'check11')"></div>
+        <div class="drag-zone" id="drop-social" onclick="placeChip(this, 'social')"></div>
       </div>
     </div>
     <div id="drag-feedback" style="font-size:0.9rem; margin-top:8px; color:var(--sage); display:none;"></div>
@@ -2056,7 +2097,10 @@
       <div class="score-num" id="score-num">0/10</div>
       <p class="score-label" id="score-msg">Résultat</p>
       <div id="qcm-pass-msg" style="display:none; color:var(--gold); font-family:'Space Mono',monospace; font-size:12px; margin-top:16px; letter-spacing:2px;">✓ QUIZ VALIDÉ — Votre badge est débloqué !</div>
-      <div id="qcm-fail-msg" style="display:none; color:#a89878; font-size:0.9rem; font-style:italic; margin-top:16px;">Vous pouvez retenter le quiz en rechargeant la page après avoir relu les sections concernées.</div>
+      <div id="qcm-fail-msg" style="display:none; color:#a89878; font-size:0.9rem; font-style:italic; margin-top:16px;">
+        Révisez les sections concernées et réessayez — il faut obtenir au moins 7/10 pour débloquer le badge.
+        <br><button class="btn btn-secondary" onclick="resetQCM()" style="margin-top:14px; font-style:normal;">↺ Recommencer le QCM</button>
+      </div>
     </div>
   </div>
 </div>
@@ -2203,22 +2247,16 @@ function checkA1(btn, result) {
 }
 
 // ===== SORTING =====
-let dragSrcEl = null;
-function dragStart(e) { dragSrcEl = e.currentTarget; e.dataTransfer.effectAllowed = 'move'; }
-function dragItemOver(e) { e.preventDefault(); e.currentTarget.classList.add('drag-over'); }
-function drop(e, listId) {
-  e.preventDefault();
+function moveItem(listId, btn, direction) {
+  const li = btn.closest('.sort-item');
   const list = document.getElementById(listId);
-  list.querySelectorAll('.sort-item').forEach(i => i.classList.remove('drag-over'));
-  if (dragSrcEl !== e.currentTarget) {
-    const items = [...list.querySelectorAll('.sort-item')];
-    const srcIdx = items.indexOf(dragSrcEl);
-    const dstIdx = items.indexOf(e.currentTarget);
-    if (dstIdx < srcIdx) e.currentTarget.before(dragSrcEl);
-    else e.currentTarget.after(dragSrcEl);
-  }
+  const items = [...list.querySelectorAll('.sort-item')];
+  const idx = items.indexOf(li);
+  const newIdx = idx + direction;
+  if (newIdx < 0 || newIdx >= items.length) return;
+  if (direction === -1) items[newIdx].before(li);
+  else items[newIdx].after(li);
 }
-function dragOver(e) { e.preventDefault(); }
 
 function checkSort(listId, checkId, feedbackId) {
   const list = document.getElementById(listId);
@@ -2318,36 +2356,37 @@ function toggleAccordion(btn, accordionId, actId) {
   }
 }
 
-// ===== DRAG CHIPS =====
-let chipSrc = null;
-function dragChip(e) { chipSrc = e.currentTarget; e.dataTransfer.effectAllowed = 'move'; }
-function allowDrop(e) { e.preventDefault(); e.currentTarget.classList.add('over'); }
-function dropChip(e, zone, checkId) {
-  e.preventDefault();
-  e.currentTarget.classList.remove('over');
-  if (!chipSrc) return;
-  const target = chipSrc.dataset.target;
+// ===== CHIP CLASSIFICATION (clic) =====
+let selectedChip = null;
+function selectChip(el) {
+  if (selectedChip) selectedChip.classList.remove('selected');
+  if (selectedChip === el) { selectedChip = null; return; }
+  selectedChip = el;
+  el.classList.add('selected');
+}
+function placeChip(zone, zoneName) {
+  if (!selectedChip) return;
+  const target = selectedChip.dataset.target;
   const fb = document.getElementById('drag-feedback');
-  if (target === zone) {
-    e.currentTarget.appendChild(chipSrc);
-    chipSrc.style.opacity = '1';
-    const src = document.getElementById('drag-source');
-    const total = document.querySelectorAll('#drag-source .drag-chip, #drop-medical .drag-chip, #drop-social .drag-chip').length;
+  if (target === zoneName) {
+    zone.appendChild(selectedChip);
+    selectedChip.classList.remove('selected');
+    selectedChip = null;
     const placed = document.querySelectorAll('#drop-medical .drag-chip, #drop-social .drag-chip').length;
     if (placed >= 6) {
       fb.style.display = 'block';
+      fb.style.color = 'var(--sage)';
       fb.textContent = '✓ Excellent ! Vous avez bien distingué les deux modèles du handicap.';
       completeActivity(11);
     }
   } else {
-    chipSrc.classList.add('error');
-    setTimeout(() => { if(chipSrc) chipSrc.classList.remove('error'); }, 600);
+    selectedChip.classList.add('error');
+    setTimeout(() => { if(selectedChip) selectedChip.classList.remove('error'); }, 600);
     fb.style.display = 'block';
     fb.style.color = 'var(--rust)';
     fb.textContent = '✗ Cet élément n\'appartient pas à ce modèle. Réessayez.';
     setTimeout(() => { fb.style.display = 'none'; fb.style.color = 'var(--sage)'; }, 2000);
   }
-  chipSrc = null;
 }
 
 // ===== SLIDER =====
@@ -2467,6 +2506,27 @@ function answerQCM(qNum, choice, btn) {
   if (Object.keys(qcmAnswered).length === 10) {
     showQCMResult();
   }
+}
+
+function resetQCM() {
+  qcmAnswered = {};
+  qcmScore = 0;
+  qcmDone = false;
+  for (let i = 1; i <= 10; i++) {
+    const qEl = document.getElementById('q' + i);
+    qEl.querySelectorAll('.qcm-option').forEach(b => {
+      b.disabled = false;
+      b.classList.remove('correct-opt', 'wrong-opt');
+    });
+    const fb = document.getElementById('fb-q' + i);
+    fb.className = 'qcm-feedback';
+    fb.textContent = '';
+  }
+  document.getElementById('qcm-score').classList.remove('show');
+  document.getElementById('qcm-fail-msg').style.display = 'none';
+  document.getElementById('qcm-pass-msg').style.display = 'none';
+  document.getElementById('quiz-done').textContent = 'Non complété';
+  window.scrollTo({ top: document.getElementById('qcm-section').offsetTop - 80, behavior: 'smooth' });
 }
 
 function showQCMResult() {
