@@ -2241,14 +2241,16 @@ function showNotification(msg) {
 // ===== ACT 1 =====
 function checkA1(btn, result) {
   const container = document.getElementById('act1-options');
-  container.querySelectorAll('button').forEach(b => b.disabled = true);
   const feedback = document.getElementById('act1-feedback');
   feedback.style.display = 'block';
   if (result === 'correct') {
+    container.querySelectorAll('button').forEach(b => b.disabled = true);
     btn.classList.add('correct');
+    feedback.style.color = 'var(--sage)';
     feedback.textContent = '✓ Correct ! Platon et Aristote, dans leurs écrits politiques, envisageaient effectivement l\'élimination des enfants nés avec des malformations.';
     completeActivity(1);
   } else {
+    container.querySelectorAll('button').forEach(b => b.classList.remove('wrong'));
     btn.classList.add('wrong');
     feedback.style.color = 'var(--rust)';
     feedback.textContent = '✗ Pas tout à fait. Relisez le paragraphe sur la Grèce antique — ce sont Platon et Aristote qui défendaient cette position.';
