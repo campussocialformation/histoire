@@ -770,6 +770,7 @@
   }
   .concept-word:hover { border-color: var(--teal); }
   .concept-word.tagged { background: var(--teal); color: white; border-color: var(--teal); }
+  .concept-word.wrong { background: var(--rust); color: white; border-color: var(--rust); }
   .concept-word.size-1 { font-size: 0.8rem; }
   .concept-word.size-2 { font-size: 1rem; }
   .concept-word.size-3 { font-size: 1.2rem; }
@@ -1465,17 +1466,17 @@
     <h4>Cliquez sur tous les concepts qui caractérisent le mouvement associatif d'après-guerre</h4>
     <p>Sélectionnez les termes pertinents (au moins 5) <span class="check-indicator" id="check8">✓ COMPLÉTÉ</span></p>
     <div class="concept-cloud" id="cloud1">
-      <span class="concept-word size-4" onclick="tagConcept(this, 'cloud1', 5, 'check8')">Solidarité</span>
-      <span class="concept-word size-2" onclick="tagConcept(this, 'cloud1', 5, 'check8')">Eugénisme</span>
-      <span class="concept-word size-3" onclick="tagConcept(this, 'cloud1', 5, 'check8')">Parentalité</span>
-      <span class="concept-word size-4" onclick="tagConcept(this, 'cloud1', 5, 'check8')">Réadaptation</span>
-      <span class="concept-word size-2" onclick="tagConcept(this, 'cloud1', 5, 'check8')">Enfermement</span>
-      <span class="concept-word size-3" onclick="tagConcept(this, 'cloud1', 5, 'check8')">Insertion professionnelle</span>
-      <span class="concept-word size-4" onclick="tagConcept(this, 'cloud1', 5, 'check8')">Éducation spécialisée</span>
-      <span class="concept-word size-3" onclick="tagConcept(this, 'cloud1', 5, 'check8')">Militantisme</span>
-      <span class="concept-word size-2" onclick="tagConcept(this, 'cloud1', 5, 'check8')">Charité religieuse</span>
-      <span class="concept-word size-3" onclick="tagConcept(this, 'cloud1', 5, 'check8')">Droits</span>
-      <span class="concept-word size-4" onclick="tagConcept(this, 'cloud1', 5, 'check8')">Autonomie</span>
+      <span class="concept-word size-4" data-correct="true"  onclick="tagConcept(this, 'cloud1', 5, 'check8')">Solidarité</span>
+      <span class="concept-word size-2" data-correct="false" onclick="tagConcept(this, 'cloud1', 5, 'check8')">Eugénisme</span>
+      <span class="concept-word size-3" data-correct="true"  onclick="tagConcept(this, 'cloud1', 5, 'check8')">Parentalité</span>
+      <span class="concept-word size-4" data-correct="true"  onclick="tagConcept(this, 'cloud1', 5, 'check8')">Réadaptation</span>
+      <span class="concept-word size-2" data-correct="false" onclick="tagConcept(this, 'cloud1', 5, 'check8')">Enfermement</span>
+      <span class="concept-word size-3" data-correct="true"  onclick="tagConcept(this, 'cloud1', 5, 'check8')">Insertion professionnelle</span>
+      <span class="concept-word size-4" data-correct="true"  onclick="tagConcept(this, 'cloud1', 5, 'check8')">Éducation spécialisée</span>
+      <span class="concept-word size-3" data-correct="true"  onclick="tagConcept(this, 'cloud1', 5, 'check8')">Militantisme</span>
+      <span class="concept-word size-2" data-correct="false" onclick="tagConcept(this, 'cloud1', 5, 'check8')">Charité religieuse</span>
+      <span class="concept-word size-3" data-correct="true"  onclick="tagConcept(this, 'cloud1', 5, 'check8')">Droits</span>
+      <span class="concept-word size-4" data-correct="true"  onclick="tagConcept(this, 'cloud1', 5, 'check8')">Autonomie</span>
     </div>
   </div>
 
@@ -2442,6 +2443,11 @@ function showHotspot(btn, key, checkId) {
 // ===== CONCEPT CLOUD =====
 let cloudCounts = {};
 function tagConcept(el, cloudId, minTags, checkId) {
+  const isCorrect = el.dataset.correct !== 'false';
+  if (!isCorrect) {
+    el.classList.toggle('wrong');
+    return;
+  }
   el.classList.toggle('tagged');
   if (!cloudCounts[cloudId]) cloudCounts[cloudId] = 0;
   cloudCounts[cloudId] += el.classList.contains('tagged') ? 1 : -1;
